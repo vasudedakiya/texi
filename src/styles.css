@@ -1,0 +1,120 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Heebo", Sans-serif, serif !important;
+}
+
+:root {
+  --primary-color: #fdc501;
+  --secondary-color: #3e4958;
+}
+
+::selection {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.primary-color {
+  color: var(--primary-color) !important;
+}
+
+.secondary-color {
+  color: var(--secondary-color) !important;
+}
+
+.background-primary {
+  background: var(--primary-color) !important;
+}
+
+.mt-80 {
+  margin-top: 80px;
+}
+
+.list-none {
+  list-style: none;
+}
+
+.fs-20 {
+  font-size: 20px !important;
+}
+
+
+.fs-30 {
+  font-size: 30px !important;
+}
+
+.fs-40 {
+  font-size: 40px !important;
+}
+
+.fs-xs {
+  font-size: xx-small !important;
+}
+
+.gap-3 {
+  gap: 10px;
+}
+
+.breadcrumb-text {
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.6em;
+  color: #3E4958 !important;
+}
+
+
+.breadcrumb-text:hover {
+  color: var(--primary-color) !important;
+}
+
+.form-button {
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  text-transform: none;
+  font-style: normal !important;
+  background-color: var(--primary-color) !important;
+  color: #ffffff !important;
+  padding: 0 70px 0 70px !important;
+  border-radius: 5px !important;
+  box-shadow: 0 8px 20px 0 rgba(27, 27, 27, 0.08) !important;
+  line-height: 60px !important;
+}
+
+.form-button:hover {
+  background-color: var(--secondary-color) !important;
+  color: #ffffff !important;
+}
+
+.p-dropdown:not(.p-disabled).p-focus,
+.p-calendar:not(.p-calendar-disabled).p-focus>.p-inputtext {
+  box-shadow: none;
+}
+
+
+.p-input-icon-left>i,
+.p-input-icon-left>.p-icon-wrapper,
+.p-input-icon-right>i,
+.p-input-icon-right>.p-icon-wrapper {
+  position: absolute;
+  top: 45%;
+  left: 15px;
+  margin-top: -0.5rem;
+  color: var(--primary-color)
+}
+
+.p-inputtext {
+  box-shadow: none;
+  padding: 0.75rem 0.75rem 0.75rem 2rem;
+}
+
+.p-calendar .p-inputtext,
+.p-dropdown .p-inputtext {
+  padding: 0.75rem 0.75rem 0.75rem 2.3rem;
+}
+
+.p-dropdown:not(.p-disabled):hover,
+input:hover {
+  border-color: var(--primary-color)
+}

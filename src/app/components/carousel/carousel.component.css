@@ -1,0 +1,46 @@
+.card-title {
+    order: 3;
+    text-align: center;
+    align-self: center;
+    color: #3e4958;
+    font-size: 30px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 1.2em;
+    margin: 0px 0px 22px 0px;
+}
+
+.card-text {
+    order: 4;
+    align-self: center;
+    text-align: center;
+    color: #767e88;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1.35em;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0;
+    margin: 0 0 24px 0;
+    border-radius: 5px;
+}
+
+.taxi-price {
+    order: 6;
+    align-self: center;
+    text-align: center;
+    color: #fdc501;
+    font-size: 48px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 1.2em;
+    margin: 0 0 63px 0;
+}
+
+.card-shadow {
+    box-shadow: 0 4px 40px 0 rgba(62, 73, 88, 0.08);
+}
+
+.card-shadow:hover {
+    transform: scale(1.1);
+}

@@ -1,0 +1,19 @@
+<div>
+    <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+        <ng-template let-product pTemplate="item">
+            <div class="border-1 surface-border border-round m-2 p-3 card-shadow">
+                <div class="mb-3">
+                    <div class="image-wrapper d-flex justify-content-center align-items-center">
+                        <img alt="Van" decoding="async" loading="lazy" src="{{ product.ImageUrl }}" />
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.VehicleName }}</h5>
+                    <div class="card-text">{{ product.Desc}}</div>
+                    <div class="taxi-price"><span>{{ '$' + product.Price }}<span
+                                style="font-size: .5em;">/km</span></span></div>
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>

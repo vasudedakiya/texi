@@ -1,0 +1,107 @@
+<p-dialog header="Add Vehicle" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true">
+    <form [formGroup]="vehicleInformation">
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Title" class="font-semibold w-6rem required">Title</label>
+            <input pInputText type="text" formControlName="VehicleName" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Description" class="font-semibold w-6rem required">Description</label>
+            <textarea type="text" pInputText formControlName="Desc" cols="4" class="flex-auto"
+                autocomplete="off"></textarea>
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Rate" class="font-semibold w-6rem required">Rate</label>
+            <input pInputText type="number" formControlName="Price" [min]="0" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Image" class="font-semibold w-6rem required">Image</label>
+            <div class="logoUploadContainer d-flex">
+                <div class="logoUploadInput" *ngIf="!logoBase64string">
+                    <input type="file" class="file-input" accept="image/*" formControlName="ImageUrl"
+                        (change)="handleFileInput($event)" #fileInput>
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        width="32px" height="32px" viewBox="0,0,256,256">
+                        <g fill="#aaaaaa" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                            style="mix-blend-mode: normal">
+                            <g transform="scale(8,8)">
+                                <path
+                                    d="M15.98633,0.00195c-0.5254,0.00307 -1.02848,0.21286 -1.40039,0.58398l-8,8c-0.57187,0.57199 -0.74292,1.43212 -0.43341,2.17939c0.30951,0.74727 1.03864,1.23455 1.84747,1.23467c0.5307,0.00143 1.03991,-0.20956 1.41406,-0.58594l4.58594,-4.58594v16.17188c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2v-16.17187l4.58594,4.58594c0.78097,0.78096 2.04716,0.78096 2.82812,0c0.78096,-0.78097 0.78096,-2.04716 0,-2.82812l-7.99805,-7.99609c-0.18528,-0.18747 -0.40649,-0.33561 -0.65039,-0.43555c-0.24697,-0.10238 -0.51196,-0.15418 -0.7793,-0.15234zM1.94141,21c-1.08162,0.0317 -1.94187,0.91791 -1.94141,2v5c0.00235,2.20816 1.79184,3.99765 4,4h24c2.20823,-0.0022 3.9978,-1.79177 4,-4v-5c-0.00143,-1.10398 -0.89602,-1.99857 -2,-2c-1.10398,0.00143 -1.99857,0.89602 -2,2v5h-24v-5c0.00023,-0.54074 -0.21851,-1.05854 -0.60635,-1.43534c-0.38784,-0.3768 -0.91173,-0.5805 -1.45225,-0.56466z">
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                    <h4> <strong>Choose a file</strong> or drag it here</h4>
+                </div>
+                <div *ngIf="logoBase64string">
+                    <div class="logoPreview">
+                        <div class="logo-wrapper">
+                            <img [src]="logoBase64string" alt="logo" />
+                        </div>
+                    </div>
+                </div>
+                <p-button *ngIf="logoBase64string" class="m-2 btn-sm" severity="warning" size="small" label="Clear"
+                    (click)="cancleVehileLogo()" />
+            </div>
+        </div>
+
+    </form>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+        <p-button label="Save" [disabled]="vehicleInformation.invalid" [loading]="isCreateLoading" (click)="onSubmit()"
+            type="submit" />
+    </div>
+</p-dialog>
+
+
+
+<div class=" flex justify-content-end">
+    <p-button class="m-2 btn-sm" icon="pi pi-plus" size="small" (click)="visible = true" />
+    <p-button class="m-2 btn-sm" icon="pi pi-refresh" size="small" (click)="fetchVehicals()" />
+</div>
+
+<div class="card flex justify-content-center align-items-center" *ngIf="isLoading">
+    <p-progressSpinner ariaLabel="loading" />
+</div>
+<div class="card" *ngIf="!isLoading">
+    <p-toast />
+    <p-confirmDialog />
+    <p-table [value]="vehicals" [tableStyle]="{'min-width': '60rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                Vehicals
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.VehicleName}}</td>
+                <td><img src="{{product.ImageUrl}}" [alt]="product.VehicleName" width="100" class="shadow-4" /></td>
+                <td>{{product.Price | currency:'INR'}}</td>
+                <td>{{product.Desc}}</td>
+                <td>
+                    <p-button class="btn-sm" (click)="deleteVehicle(product.id)" icon="pi pi-trash" size="small"
+                        severity="danger" [outlined]="true" />
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="flex align-items-center justify-content-between">
+                In total there are {{vehicals ? vehicals.length : 0 }} vehicals.
+            </div>
+        </ng-template>
+    </p-table>
+</div>

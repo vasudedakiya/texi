@@ -1,0 +1,154 @@
+.about-us-container {
+  background-image: url('/assets/background-images/about_us.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.about-us-review-container {
+  background-image: url('/assets/background-images/about_us_2.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.theme-primary-tag {
+  color: #f9d700;
+}
+
+/*
+.contact-us-content {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+} */
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body .btn {
+  margin-top: auto;
+  /* Push the bton to the bottom */
+}
+
+.app-download-header {
+  color: #3e4958;
+  font-size: 48px;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 1.2em;
+}
+
+.app-download-text {
+  color: #767e88;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.4em;
+  flex-basis: 420px;
+  margin: 0 0 29px 0;
+}
+
+.app-download-points {
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.6em;
+  color: #767e88;
+}
+
+.app-download-button {
+  background: #767e88;
+  padding: 8px 30px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 165px;
+
+  h1 {
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1.2em;
+  }
+
+  h2 {
+    color: var(--primary-color);
+    font-size: 72px;
+    font-weight: bold;
+    font-style: normal;
+    line-height: 1.2em;
+  }
+
+  h3 {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1.2em;
+  }
+}
+
+.bs-card-spacing {
+  padding: 50px 25px;
+  color: #3e4958;
+  box-shadow: 0px 4px 40px 0px rgba(62, 73, 88, 0.08);
+  border: none;
+}
+
+.review-img {
+  vertical-align: middle;
+  display: inline-block;
+  height: auto;
+  max-width: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+.elementor-heading-title {
+  color: #3e4958;
+  font-family: "Heebo", Sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.2em;
+}
+
+.element-widget-container {
+  text-align: left;
+  color: #767e88;
+  font-family: "Heebo", Sans-serif;
+  font-size: 20px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.6em;
+}
+
+.element-widget-container-text {
+  text-align: left;
+  color: #3e4958;
+  font-family: "Heebo", Sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.6em;
+}
