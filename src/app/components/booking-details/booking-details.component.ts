@@ -21,7 +21,7 @@ export class BookingDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private _locationIqService: LocationIqService) { }
   fromText: string | undefined;
   toText: string | undefined;
-  distance: number | undefined;
+  // distance: number | undefined;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -48,13 +48,13 @@ export class BookingDetailsComponent implements OnInit {
         }
       })
 
-      timer(2000).pipe(
-        switchMap(() => this._locationIqService.direction(this.fromLatLng?.lat!, this.fromLatLng?.lon!, this.toLatLng?.lat!, this.toLatLng?.lon!))
-      ).subscribe({
-        next: (res) => {
-          this.distance = (res.routes[0].distance) / 1000;
-        }
-      })
+      // timer(2000).pipe(
+      //   switchMap(() => this._locationIqService.direction(this.fromLatLng?.lat!, this.fromLatLng?.lon!, this.toLatLng?.lat!, this.toLatLng?.lon!))
+      // ).subscribe({
+      //   next: (res) => {
+      //     this.distance = (res.routes[0].distance) / 1000;
+      //   }
+      // })
 
       timer(1000).pipe(
         switchMap(() => this._locationIqService.reverseGeocoding(this.toLatLng?.lat!, this.toLatLng?.lon!))
@@ -67,8 +67,8 @@ export class BookingDetailsComponent implements OnInit {
     else {
       console.error('fromLatLng or toLatLng is undefined');
     }
-    this.fromText = 'Narsinh Mehta Statue, Ahmedabad one mall street, Vastrapur, Vejalpur Taluka, Ahmedabad District, Gujarat, 380054, India'
-    this.distance = 239.93
-    this.toText = 'Rajkot West Taluka, રાજકોટ, Gujarat, 360005, India'
+    // this.fromText = 'Narsinh Mehta Statue, Ahmedabad one mall street, Vastrapur, Vejalpur Taluka, Ahmedabad District, Gujarat, 380054, India'
+    // this.distance = 239.93
+    // this.toText = 'Rajkot West Taluka, રાજકોટ, Gujarat, 360005, India'
   }
 }
