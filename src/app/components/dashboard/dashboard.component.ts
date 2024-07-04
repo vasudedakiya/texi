@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
 import { LocationIqService } from '../../service/location-iq.service';
 import { Router } from '@angular/router';
+import { SharedDataService } from '../../service/shared-data.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,7 +47,7 @@ export class DashboardComponent implements OnInit {
   private readonly _storage = inject(Storage);
   private readonly _router = inject(Router);
 
-  constructor(private _locationIqService: LocationIqService) {
+  constructor(private _locationIqService: LocationIqService,private _sharedDataService: SharedDataService) {
     this.fromTextUpdate.pipe(
       debounceTime(500),
       distinctUntilChanged(),
@@ -93,15 +94,16 @@ export class DashboardComponent implements OnInit {
   }
 
   selectFromSuggestion(suggestion: any) {
-    this.fromText = suggestion.display_name;
+    console.log(suggestion.display_name);
+    this.fromText = this._sharedDataService.fromText = suggestion.display_name;
     this.fromSuggestions = [];
-    this.fromLatLng = { lat: parseFloat(suggestion.lat), lon: parseFloat(suggestion.lon) };
+    this.fromLatLng = this._sharedDataService.fromLatLng = { lat: parseFloat(suggestion.lat), lon: parseFloat(suggestion.lon) };
   }
 
   selectToSuggestion(suggestion: any) {
-    this.toText = suggestion.display_name;
+    this.toText = this._sharedDataService.toText = suggestion.display_name;
     this.toSuggestions = [];
-    this.toLatLng = { lat: parseFloat(suggestion.lat), lon: parseFloat(suggestion.lon) };
+    this.toLatLng = this._sharedDataService.toLatLng = { lat: parseFloat(suggestion.lat), lon: parseFloat(suggestion.lon) };
   }
 
   orderTaxiNow() {

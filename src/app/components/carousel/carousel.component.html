@@ -1,13 +1,14 @@
 <div class="carousel-container">
     <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
         <ng-template let-product pTemplate="item">
-            <div class="card border-1 surface-border border-round m-2 p-3 card-shadow">
+            <div class="card border-1 surface-border border-round m-2 p-3 card-shadow" (click)="onCardClick(product.id)"
+            >
                 <div class="card-image mb-3">
                     <div class="image-wrapper d-flex justify-content-center align-items-center">
                         <img alt="Van" decoding="async" loading="lazy" src="{{ product.ImageUrl }}" />
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id={{product.id}}>
                     <h5 class="card-title">{{ product.VehicleName }}</h5>
                     <div class="card-text">{{ product.Desc }}</div>
                     <div class="taxi-price"><span>{{ '$' + product.Price }}<span style="font-size: .5em;">/km</span></span></div>

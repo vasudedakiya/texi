@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
-import { CommonService } from '../../service/common.service'
 import { TagModule } from 'primeng/tag';
 import { Vehicles } from '../../vehicle.interface';
 import { VehicleService } from '../../service/vehicle.service';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -40,12 +40,11 @@ export class CarouselComponent implements OnInit {
   ];
 
   vehicleService = inject(VehicleService)
-  constructor(private commonService: CommonService, private _storage: Storage) { }
+  constructor(private _storage: Storage, _activatedRoute : ActivatedRoute, private _router : Router) { }
 
   ngOnInit(): void {
     // this.products = this.commonService.customCarouselCards;
     this.vehicleService.getVehicles().subscribe(vehicles => {
-      console.log(vehicles);
       this.products = vehicles;
       this.updateVehicleImages();
     })
@@ -54,12 +53,17 @@ export class CarouselComponent implements OnInit {
     this.products.forEach(vehicle => {
       const imageRef = ref(this._storage, vehicle.ImageUrl);
       getDownloadURL(imageRef).then((url: string) => {
-        console.log(url);
         vehicle.ImageUrl = url;
       }).catch((error: any) => {
         console.error(`Failed to get image URL for vehicle ${vehicle.Id}:`, error);
         vehicle.ImageUrl = 'path/to/default-image.png';
       });
     });
+  }
+
+  onCardClick(productId: string) {
+    if (this._router.url.includes('booking-details')) {
+      this._router.navigate(['/user-details', productId]);
+    }
   }
 }
