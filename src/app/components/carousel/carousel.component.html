@@ -1,7 +1,7 @@
 <div class="carousel-container">
     <p-carousel [value]="products" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions">
         <ng-template let-product pTemplate="item">
-            <div class="card border-1 surface-border border-round m-2 p-3 card-shadow" (click)="onCardClick(product.id)"
+            <div class="card border-1 surface-border border-round m-2 p-3 card-shadow" (click)="onCardClick(product.id)" [class.clickable]="isBookingDetailsRoute"
             >
                 <div class="card-image mb-3">
                     <div class="image-wrapper d-flex justify-content-center align-items-center">

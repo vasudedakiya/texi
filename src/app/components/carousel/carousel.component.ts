@@ -5,6 +5,7 @@ import { Vehicles } from '../../vehicle.interface';
 import { VehicleService } from '../../service/vehicle.service';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SharedDataService } from '../../service/shared-data.service';
 
 
 @Component({
@@ -40,9 +41,14 @@ export class CarouselComponent implements OnInit {
   ];
 
   vehicleService = inject(VehicleService)
-  constructor(private _storage: Storage, _activatedRoute : ActivatedRoute, private _router : Router) { }
+  isBookingDetailsRoute: boolean = false;
+  constructor(private _storage: Storage, public _activatedRoute : ActivatedRoute, private _router : Router,private _sharedData : SharedDataService) { }
 
   ngOnInit(): void {
+
+    this._activatedRoute.url.subscribe(url => {
+      this.isBookingDetailsRoute = url.some(segment => segment.path.includes('booking-details'));
+    });
     // this.products = this.commonService.customCarouselCards;
     this.vehicleService.getVehicles().subscribe(vehicles => {
       this.products = vehicles;
@@ -62,8 +68,17 @@ export class CarouselComponent implements OnInit {
   }
 
   onCardClick(productId: string) {
+    console.log("Hiiii")
     if (this._router.url.includes('booking-details')) {
-      this._router.navigate(['/user-details', productId]);
+      this._router.navigate(['/user-details'],{
+        queryParams: {
+          fromLat: this._sharedData.fromLatLng?.lat,
+          fromLon: this._sharedData.fromLatLng?.lon,
+          toLat: this._sharedData.toLatLng?.lat,
+          toLon: this._sharedData.toLatLng?.lon,
+          cabTypId : productId
+        }
+      });
     }
   }
 }
