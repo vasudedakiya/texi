@@ -67,8 +67,9 @@ export class CarouselComponent implements OnInit {
     });
   }
 
-  onCardClick(productId: string) {
-    console.log("Hiiii")
+  onCardClick(vehicle : Vehicles) {
+    console.log(vehicle)
+    this._sharedData.vehicle = vehicle;
     if (this._router.url.includes('booking-details')) {
       this._router.navigate(['/user-details'],{
         queryParams: {
@@ -76,7 +77,7 @@ export class CarouselComponent implements OnInit {
           fromLon: this._sharedData.fromLatLng?.lon,
           toLat: this._sharedData.toLatLng?.lat,
           toLon: this._sharedData.toLatLng?.lon,
-          cabTypId : productId
+          cabTypId : vehicle.Id
         }
       });
     }
