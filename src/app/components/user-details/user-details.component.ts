@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-user-details',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.css',
   providers: [MessageService]
@@ -171,12 +171,13 @@ export class UserDetailsComponent implements OnInit {
       Vehicle: this._sharedDataService.vehicle?.VehicleName,
       Rate: Number(this.priceText)
     }
-    
+
     this._vehicleService.addUserDetails(this.userDetails).subscribe({
       next: (data) => {
         this.isCreateLoading = false;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
         this.visible = false;
+        document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=vasu`;
       },
       error: (err) => {
         this.isCreateLoading = false;

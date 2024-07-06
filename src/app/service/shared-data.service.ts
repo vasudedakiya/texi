@@ -12,7 +12,7 @@ export class SharedDataService {
   toText: string | undefined;
   fromLatLng: { lat: number, lon: number } | undefined;
   toLatLng: { lat: number, lon: number } | undefined;
-  PhoneNo : string | undefined;
+  PhoneNo : string = "919428729282";
   vehicle : Vehicles | undefined;
 
 }
