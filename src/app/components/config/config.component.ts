@@ -83,10 +83,9 @@ export class ConfigComponent implements OnInit {
     this.vehicals.forEach(vehicle => {
       const imageRef = ref(this._storage, vehicle.ImageUrl);
       getDownloadURL(imageRef).then((url: string) => {
-        console.log(url);
         vehicle.ImageUrl = url;
       }).catch((error: any) => {
-        console.error(`Failed to get image URL for vehicle ${vehicle.Id}:`, error);
+        console.error(`Failed to get image URL for vehicle ${vehicle.id}:`, error);
         vehicle.ImageUrl = 'path/to/default-image.png';
       });
     });
@@ -144,11 +143,9 @@ export class ConfigComponent implements OnInit {
       accept: () => {
         this.vehicleService.removeVehicle(Id).subscribe({
           next: (data) => {
-            console.log(data)
             this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
           },
           error: (err) => {
-            console.log(err)
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error' });
           }
         })

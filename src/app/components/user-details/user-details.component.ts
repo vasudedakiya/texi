@@ -7,24 +7,25 @@ import { switchMap, timer } from 'rxjs';
 import { UserDetails } from '../../vehicle.interface';
 import { VehicleService } from '../../service/vehicle.service';
 import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-details',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './user-details.component.html',
   styleUrl: './user-details.component.css',
   providers: [MessageService]
 })
 export class UserDetailsComponent implements OnInit {
-  fromText: string |undefined;
-  toText: string |undefined;
+  fromText: string | undefined;
+  toText: string | undefined;
   userName: string = '';
   mobileNo: string = '';
   email: string = '';
   fromLatLng: { lat: number, lon: number } | undefined;
   toLatLng: { lat: number, lon: number } | undefined;
-  priceText: string = "100"
+  priceText: number | null = null;
   vehicleId: string = "";
   isCreateLoading: boolean = false;
   visible: boolean = false;
@@ -89,16 +90,18 @@ export class UserDetailsComponent implements OnInit {
         switchMap(() => this._locationIqService.direction(this.fromLatLng?.lat!, this.fromLatLng?.lon!, this.toLatLng?.lat!, this.toLatLng?.lon!))
       ).subscribe({
         next: (res) => {
-          this.userDetails.Distances = (res.routes[0].distance) / 1000;
+
+          this.userDetails.Distances = this.findMinimumDistance(res);
+
           if (this._sharedDataService.vehicle == null) {
             this._vehicleService.getVehicleById(this.vehicleId).subscribe(vehicle => {
               this._sharedDataService.vehicle = vehicle;
+              this.priceText = (this.userDetails.Distances * vehicle.Price);
             })
           }
-          if (this._sharedDataService.vehicle)
-            this.priceText = (this.userDetails.Distances * this._sharedDataService.vehicle?.Price).toString();
-            console.log(this.userDetails.Distances,"this.userDetails.Distances")
-            console.log(this._sharedDataService.vehicle?.Price,"this._sharedDataService.vehicle?.Price")
+          else {
+            this.priceText = (this.userDetails.Distances * this._sharedDataService.vehicle?.Price);
+          }
         }
       })
 
@@ -125,9 +128,34 @@ export class UserDetailsComponent implements OnInit {
       switchMap(() => this._locationIqService.direction(this.fromLatLng?.lat!, this.fromLatLng?.lon!, this.toLatLng?.lat!, this.toLatLng?.lon!))
     ).subscribe({
       next: (res) => {
-        this.userDetails.Distances = (res.routes[0].distance) / 1000;
+        this.userDetails.Distances = this.findMinimumDistance(res);
       }
     })
+  }
+
+  findMinimumDistance(response: any): number {
+    const distances: number[] = [];
+
+    function extractDistances(obj: any) {
+      if (typeof obj === 'object' && obj !== null) {
+        for (const key in obj) {
+          if (key === 'distance' && typeof obj[key] === 'number') {
+            distances.push(obj[key]);
+          } else {
+            extractDistances(obj[key]);
+          }
+        }
+      }
+    }
+
+    // Start extraction from the response object
+    extractDistances(response);
+
+    // Filter out zero distances and find the minimum distance
+    const validDistances = distances.filter(distance => distance > 0);
+    const minDistance = Math.min(...validDistances);
+
+    return minDistance / 1000;
   }
 
   onSubmit() {
@@ -143,6 +171,7 @@ export class UserDetailsComponent implements OnInit {
       Vehicle: this._sharedDataService.vehicle?.VehicleName,
       Rate: Number(this.priceText)
     }
+    
     this._vehicleService.addUserDetails(this.userDetails).subscribe({
       next: (data) => {
         this.isCreateLoading = false;
@@ -153,11 +182,6 @@ export class UserDetailsComponent implements OnInit {
         this.isCreateLoading = false;
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error' });
       }
-    });
-    console.log('Form submitted:', {
-      userName: this.userName,
-      mobileNo: this.mobileNo,
-      email: this.email
     });
   }
 }

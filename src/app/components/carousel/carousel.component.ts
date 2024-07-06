@@ -61,14 +61,13 @@ export class CarouselComponent implements OnInit {
       getDownloadURL(imageRef).then((url: string) => {
         vehicle.ImageUrl = url;
       }).catch((error: any) => {
-        console.error(`Failed to get image URL for vehicle ${vehicle.Id}:`, error);
+        console.error(`Failed to get image URL for vehicle ${vehicle.id}:`, error);
         vehicle.ImageUrl = 'path/to/default-image.png';
       });
     });
   }
 
   onCardClick(vehicle : Vehicles) {
-    console.log(vehicle)
     this._sharedData.vehicle = vehicle;
     if (this._router.url.includes('booking-details')) {
       this._router.navigate(['/user-details'],{
@@ -77,7 +76,7 @@ export class CarouselComponent implements OnInit {
           fromLon: this._sharedData.fromLatLng?.lon,
           toLat: this._sharedData.toLatLng?.lat,
           toLon: this._sharedData.toLatLng?.lon,
-          cabTypId : vehicle.Id
+          cabTypId : vehicle.id,
         }
       });
     }

@@ -94,7 +94,6 @@ export class DashboardComponent implements OnInit {
   }
 
   selectFromSuggestion(suggestion: any) {
-    console.log(suggestion.display_name);
     this.fromText = this._sharedDataService.fromText = suggestion.display_name;
     this.fromSuggestions = [];
     this.fromLatLng = this._sharedDataService.fromLatLng = { lat: parseFloat(suggestion.lat), lon: parseFloat(suggestion.lon) };

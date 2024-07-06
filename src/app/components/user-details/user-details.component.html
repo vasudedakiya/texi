@@ -14,7 +14,14 @@
       </div>
       <div class="info-item">
         <label>Price:</label>
-        <span class="small-text">{{ priceText }}</span>
+        <span class="small-text">
+          <!-- {{ priceText | number: '1.0-0' }} -->
+
+          <ng-container *ngIf="priceText !== null; else calculating">
+            {{ priceText | number: '1.0-0' }}
+          </ng-container>
+          <ng-template #calculating>calculating...</ng-template>
+        </span>
       </div>
     </div>
   </div>
