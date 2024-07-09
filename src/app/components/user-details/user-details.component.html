@@ -1,49 +1,48 @@
 <div class="page-container">
-  <div class="card mt-5">
-    <div class="info-header">
-      <h4>Booking Details</h4>
-    </div>
-    <div class="info-content">
+  <div class="content-wrapper">
+    <div class="booking-details">
+      <h4>{{userDetails.Vehicle}}</h4>
       <div class="info-item">
-        <label>From:</label>
+        <span class="icon-location"></span>
+        <label>Trip From:</label>
         <span class="small-text">{{ fromText }}</span>
       </div>
       <div class="info-item">
-        <label>To:</label>
+        <span class="icon-car"></span>
+        <label>Desired Location:</label>
         <span class="small-text">{{ toText }}</span>
       </div>
-      <div class="info-item">
-        <label>Price:</label>
-        <span class="small-text">
+      <div class="info-item highlight">
+        <label>Total Fare:</label>
+        <span class="price-text">
           <!-- {{ priceText | number: '1.0-0' }} -->
-
           <ng-container *ngIf="priceText !== null; else calculating">
-            {{ priceText | number: '1.0-0' }}
+            ₹{{ priceText | number: '1.0-0' }}
           </ng-container>
           <ng-template #calculating>calculating...</ng-template>
         </span>
       </div>
     </div>
-  </div>
 
-  <div class="form-container">
-    <h2>User Details Form</h2>
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="userName">User Name:</label>
-        <input type="text" id="userName" name="userName" [(ngModel)]="userName" required>
-      </div>
-      <div class="form-group">
-        <label for="mobileNo">Mobile No:</label>
-        <input type="tel" id="mobileNo" name="mobileNo" [(ngModel)]="mobileNo" required pattern="[0-9]{10}">
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" [(ngModel)]="email" required>
-      </div>
-      <div class="form-group">
-        <button type="submit">Submit</button>
-      </div>
-    </form>
+    <div class="form-container">
+      <h2>Billing Details</h2>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="mobileNo">Mobile No:</label>
+          <input type="tel" id="mobileNo" name="mobileNo" [(ngModel)]="mobileNo" required pattern="[0-9]{10}">
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" [(ngModel)]="email" required>
+        </div>
+        <div class="form-group">
+          <label for="userName">Full Name:</label>
+          <input type="text" id="userName" name="userName" [(ngModel)]="userName" required>
+        </div>
+        <div class="form-group">
+          <button type="submit">Book Now</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

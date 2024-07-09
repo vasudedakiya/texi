@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonService } from '../../service/common.service';
+import { SharedDataService } from '../../service/shared-data.service';
 
 @Component({
   selector: 'app-header',
@@ -10,5 +11,5 @@ import { CommonService } from '../../service/common.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  constructor(readonly commonService: CommonService) { }
+  constructor(readonly sharedDataService: SharedDataService) { }
 }

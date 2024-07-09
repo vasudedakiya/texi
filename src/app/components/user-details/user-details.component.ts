@@ -29,6 +29,7 @@ export class UserDetailsComponent implements OnInit {
   vehicleId: string = "";
   isCreateLoading: boolean = false;
   visible: boolean = false;
+  textMessage : string = ""
 
   userDetails: UserDetails = {
     Name: '',
@@ -96,6 +97,7 @@ export class UserDetailsComponent implements OnInit {
           if (this._sharedDataService.vehicle == null) {
             this._vehicleService.getVehicleById(this.vehicleId).subscribe(vehicle => {
               this._sharedDataService.vehicle = vehicle;
+              this.userDetails.Vehicle = vehicle.VehicleName;
               this.priceText = (this.userDetails.Distances * vehicle.Price);
             })
           }
@@ -169,7 +171,7 @@ export class UserDetailsComponent implements OnInit {
       To: this.toText?.toString(),
       Distances: this.userDetails.Distances,
       Vehicle: this._sharedDataService.vehicle?.VehicleName,
-      Rate: Number(this.priceText)
+      Rate:  Math.floor(Number(this.priceText))
     }
 
     this._vehicleService.addUserDetails(this.userDetails).subscribe({
@@ -177,7 +179,8 @@ export class UserDetailsComponent implements OnInit {
         this.isCreateLoading = false;
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
         this.visible = false;
-        document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=vasu`;
+        this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
+        document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
       },
       error: (err) => {
         this.isCreateLoading = false;
