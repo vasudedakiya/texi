@@ -3,7 +3,10 @@ id? : string
 ImageUrl : string,
 VehicleName : string,
 Desc : string,
-Price : number
+Price : number,
+Passengers : number,
+AirCondition : boolean,
+Luggage : number
 }
 
 export interface UserDetails{

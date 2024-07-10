@@ -27,16 +27,7 @@
   transform: translateY(-10px);
 }
 
-.info-header {
-  margin-bottom: 20px;
-}
 
-.info-header h2 {
-  margin: 0;
-  font-size: 28px;
-  color: #fdc501;
-  font-weight: bold;
-}
 
 .info-content {
   width: 100%;
@@ -123,4 +114,139 @@
   font-size: 24px;
   color: #fdc501;
   font-weight: bold;
+}
+
+
+.dashboard-container {
+  background: url(https://ld-wp73.template-help.com/wordpress/prod_26760/v2/wp-content/uploads/2019/11/Rectangle-4.png) no-repeat center center;
+  background-size: cover;
+  height: 700px;
+  width: 100% !important;
+  box-shadow: 0 4px 40px 0 rgba(62, 73, 88, 0.08);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 165px;
+}
+
+.header h1 {
+  color: #ffffff;
+  font-size: 48px;
+  text-align: center;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.2em;
+}
+
+.header h2 {
+  color: var(--primary-color);
+  font-size: 72px;
+  text-align: center;
+  font-weight: bold;
+  font-style: normal;
+  line-height: 1.2em;
+}
+
+.header h3 {
+  color: #ffffff;
+  text-align: center;
+  font-size: 24px;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1.2em;
+}
+
+
+.form-container {
+  width: 75%;
+  margin-top: 100px;
+  padding: 30px 60px;
+  background: #ffffff;
+}
+
+.info-header {
+  margin-bottom: 20px;
+}
+
+.info-header h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #fdc501;
+  font-weight: bold;
+}
+
+
+@media screen and (max-width: 1024px) {
+  .form-container {
+    width: 80%;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .card:not(:first-child) {
+    display: none;
+  }
+
+  .dashboard-container {
+    height: 510px;
+  }
+
+  .header {
+    padding: 20px;
+
+    h1 {
+      font-size: 28px;
+    }
+
+    h2 {
+      font-size: 40px;
+    }
+
+    h3 {
+      font-size: 24px;
+    }
+  }
+
+  .form-container {
+    width: 95%;
+    margin-top: 20px;
+    padding: 20px 0;
+  }
+
+  .m-none {
+    margin:0;
+  }
+
+  .app-download-header {
+    font-size: 35px;
+  }
+
+  .quote {
+    font-size: 20px;
+  }
+
+  .quote-author-name {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 576px) {
+  .cards-wrapper {
+    display: flex;
+  }
+
+  .card {
+    margin: 0 0.5em;
+    width: calc(100% / 2);
+  }
+
+  .image-wrapper {
+    height: 10vw;
+    margin: 0 auto;
+  }
 }

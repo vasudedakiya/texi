@@ -52,6 +52,7 @@ export class CarouselComponent implements OnInit {
     // this.products = this.commonService.customCarouselCards;
     this.vehicleService.getVehicles().subscribe(vehicles => {
       this.products = vehicles;
+      console.log(vehicles);
       this.updateVehicleImages();
     })
   }

@@ -41,6 +41,9 @@ export class ConfigComponent implements OnInit {
     VehicleName: new FormControl(null, [Validators.required]),
     Desc: new FormControl(null, [Validators.required]),
     Price: new FormControl(null, [Validators.required]),
+    Passengers: new FormControl(null,[Validators.required]),
+    AirCondition: new FormControl(null,[Validators.required]),
+    Luggage: new FormControl(null,[Validators.required]),
   })
 
   visible: boolean = false;

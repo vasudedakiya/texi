@@ -1,4 +1,42 @@
-<div class="info-container">
+<div class="dashboard-container">
+  <section class="header">
+    <div>
+      <h1>Choose your taxi</h1>
+    </div>
+    <div>
+      <h2>Quick <span style="font-size: xxx-large;"> & </span> Easy</h2>
+    </div>
+    <div>
+      <h3>Select the best ride for you</h3>
+    </div>
+    <div class="form-container row">
+      <div class="col-12 position-relative">
+        <div class="info-header">
+          <h2><i class="fas fa-taxi"></i> Booking Details</h2>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 px-3 py-2 d-flex justify-content-center position-relative">
+        <!-- <div class="input-group input-group-lg"> -->
+          <label class="d-flex align-items-center"><i class="fas fa-location-arrow mr-1"></i> :&nbsp;</label>
+          <span class="small-text">{{ fromText }}</span>
+        <!-- </div> -->
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 px-3 py-2 d-flex justify-content-center position-relative">
+        <!-- <div class="input-group input-group-lg"> -->
+          <label class="d-flex align-items-center"><i class="fas fa-map-pin mr-1"></i> :&nbsp;</label>
+          <span class="small-text">{{ toText }}</span>
+        <!-- </div> -->
+      </div>
+    </div>
+  </section>
+</div>
+
+
+
+
+<!-- <div class="info-container">
   <div class="info-header">
     <h2><i class="fas fa-taxi"></i> Taxi Booking Details <i class="fas fa-map-marker-alt"></i></h2>
   </div>
@@ -11,16 +49,16 @@
       <label><i class="fas fa-map-pin"></i> To:</label>
       <span class="small-text">{{ toText }}</span>
     </div>
-    <!-- <div class="info-item">
+    <div class="info-item">
       <label><i class="fas fa-road"></i> Distance:</label>
       <span class="highlighted-text">{{ distance | number: '1.0-2' }} km</span>
-    </div> -->
+    </div>
   </div>
-</div>
+</div> -->
 
 
 
 <div class="carousel-container">
-  <h3>Available Taxis</h3>
+  <h3>Select your ride</h3>
   <app-carousel></app-carousel>
 </div>
