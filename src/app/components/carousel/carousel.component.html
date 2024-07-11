@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div *ngFor="let product of products"
-        class="card col-md-3 col-sm-5 col-10 border-1 surface-border border-round m-2 p-3 card-shadow">
+        class="card col-md-3 col-sm-5 col-10 border-1 surface-border border-round m-2 p-3 card-shadow" (click)="onCardClick(product)" [class.clickable]="isBookingDetailsRoute">
         <div class="card-image mb-3">
             <div class="image-wrapper d-flex justify-content-center align-items-center">
                 <img alt="Van" decoding="async" loading="lazy" [src]="product.ImageUrl" />
