@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { Vehicles } from '../../vehicle.interface';
@@ -16,6 +16,8 @@ import { SharedDataService } from '../../service/shared-data.service';
   styleUrl: './carousel.component.css'
 })
 export class CarouselComponent implements OnInit {
+  @Output() cardClick = new EventEmitter<any>();
+
   products: Vehicles[] = []
   responsiveOptions: any[] | undefined = [
     {
@@ -52,7 +54,6 @@ export class CarouselComponent implements OnInit {
     // this.products = this.commonService.customCarouselCards;
     this.vehicleService.getVehicles().subscribe(vehicles => {
       this.products = vehicles;
-      console.log(vehicles);
       this.updateVehicleImages();
     })
   }
@@ -69,17 +70,24 @@ export class CarouselComponent implements OnInit {
   }
 
   onCardClick(vehicle : Vehicles) {
-    this._sharedData.vehicle = vehicle;
-    if (this._router.url.includes('booking-details')) {
-      this._router.navigate(['/user-details'],{
-        queryParams: {
-          fromLat: this._sharedData.fromLatLng?.lat,
-          fromLon: this._sharedData.fromLatLng?.lon,
-          toLat: this._sharedData.toLatLng?.lat,
-          toLon: this._sharedData.toLatLng?.lon,
-          cabTypId : vehicle.id,
-        }
-      });
-    }
+    this.cardClick.emit(vehicle);
+    // this._sharedData.vehicle = vehicle;
+    // if (this._router.url.includes('booking-details')) {
+    //   this._router.navigate(['/user-details'],{
+    //     queryParams: {
+    //       fromLat: this._sharedData.fromLatLng?.lat,
+    //       fromLon: this._sharedData.fromLatLng?.lon,
+    //       toLat: this._sharedData.toLatLng?.lat,
+    //       toLon: this._sharedData.toLatLng?.lon,
+    //       cabTypId : vehicle.id,
+    //     }
+    //   });
+    // }
+
+    // if(this.isBookingDetailsRoute){
+    //   let modal = document.getElementById("BookingModalOpen") as HTMLElement;
+    //   modal.click();
+    // }
+
   }
 }

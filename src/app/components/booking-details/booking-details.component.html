@@ -18,15 +18,15 @@
 
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 px-3 py-2 d-flex justify-content-center position-relative">
         <!-- <div class="input-group input-group-lg"> -->
-          <label class="d-flex align-items-center"><i class="fas fa-location-arrow mr-1"></i> :&nbsp;</label>
-          <span class="small-text">{{ fromText }}</span>
+        <label class="d-flex align-items-center"><i class="fas fa-location-arrow mr-1"></i> :&nbsp;</label>
+        <span class="small-text">{{ fromText }}</span>
         <!-- </div> -->
       </div>
 
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 px-3 py-2 d-flex justify-content-center position-relative">
         <!-- <div class="input-group input-group-lg"> -->
-          <label class="d-flex align-items-center"><i class="fas fa-map-pin mr-1"></i> :&nbsp;</label>
-          <span class="small-text">{{ toText }}</span>
+        <label class="d-flex align-items-center"><i class="fas fa-map-pin mr-1"></i> :&nbsp;</label>
+        <span class="small-text">{{ toText }}</span>
         <!-- </div> -->
       </div>
     </div>
@@ -60,5 +60,153 @@
 
 <div class="carousel-container">
   <h3>Select your ride</h3>
-  <app-carousel></app-carousel>
+  <app-carousel (cardClick)="onCardClick($event)"></app-carousel>
 </div>
+
+<button type="button" class="btn btn-custom text d-none" #bookingModalOpenButton id="BookingModalOpen" data-bs-toggle="modal" data-bs-target="#bookingModal">Open
+  Booking Modal</button>
+
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+          <div class="row g-0">
+            <div class="col-md-8 cal-sm-12 p-4">
+              <div class="d-flex align-items-center mb-3">
+                <span class="h5 fw-bold">Take Your Taxi</span>
+              </div>
+              <!-- <h1 class="h4 fw-bold mb-4">Just Last step</h1> -->
+              <div class="border p-3 rounded">
+                <form (ngSubmit)="onSubmit()">
+                  <div class="mb-3">
+                    <label for="userName" class="form-label">Full Name:</label>
+                    <input type="text" id="userName" name="userName" [(ngModel)]="userName" required
+                      class="form-control">
+                  </div>
+                  <div class="mb-3">
+                    <label for="mobileNo" class="form-label">Mobile No:</label>
+                    <input type="tel" id="mobileNo" name="mobileNo" [(ngModel)]="mobileNo" required
+                      pattern="[0-9]{10}" class="form-control">
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" name="email" [(ngModel)]="email" required class="form-control">
+                  </div>
+                  <div class="mb-3">
+                    <p class="small text-muted">Your booking will be effective from the scheduled date.</p>
+                  </div>
+                  <div class="mb-3">
+                    <p class="small text-muted">Booking Date: July 14, 2024</p>
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-custom text-white">Proceed to Booking</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-md-4 cal-sm-12 bg-light p-4">
+              
+              <h2 class="h5 fw-bold mb-4">Total Payable</h2>
+              <p class="display-6 fw-bold mb-4">
+                <span class="price-text">
+                  <!-- {{ priceText | number: '1.0-0' }} -->
+                  <ng-container *ngIf="priceText !== null; else calculating">
+                    ₹{{ priceText | number: '1.0-0' }}
+                  </ng-container>
+                  <ng-template #calculating>calculating...</ng-template>
+                </span>
+              </p>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="text-muted">From:</span>
+                  <span class="text-muted">{{ fromText }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="text-muted">To:</span>
+                  <span class="text-muted">{{ toText }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="text-muted">Vehicle:</span>
+                  <span class="text-muted">{{userDetails.Vehicle}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog custom-modal-width" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="page-container">
+          <div class="content-wrapper">
+            <div class="booking-details">
+              <h4>{{userDetails.Vehicle}}</h4>
+              <div class="info-item">
+                <span class="icon-location"></span>
+                <label>Trip From:</label>
+                <span class="small-text">{{ fromText }}</span>
+              </div>
+              <div class="info-item">
+                <span class="icon-car"></span>
+                <label>Desired Location:</label>
+                <span class="small-text">{{ toText }}</span>
+              </div>
+              <div class="info-item highlight">
+                <label>Total Fare:</label>
+                <span class="price-text">
+                  <ng-container *ngIf="priceText !== null; else calculating">
+                    ₹{{ priceText | number: '1.0-0' }}
+                  </ng-container>
+                  <ng-template #calculating>calculating...</ng-template>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-container">
+              <h2>Billing Details</h2>
+              <form (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                  <label for="mobileNo">Mobile No:</label>
+                  <input type="tel" id="mobileNo" name="mobileNo" [(ngModel)]="mobileNo" required pattern="[0-9]{10}">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" id="email" name="email" [(ngModel)]="email" required>
+                </div>
+                <div class="form-group">
+                  <label for="userName">Full Name:</label>
+                  <input type="text" id="userName" name="userName" [(ngModel)]="userName" required>
+                </div>
+                <div class="form-group">
+                  <button type="submit">Book Now</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->

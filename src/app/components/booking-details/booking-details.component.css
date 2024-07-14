@@ -250,3 +250,91 @@
     margin: 0 auto;
   }
 }
+
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 95%;
+  max-height: 400px; /* Adjust this value as needed */
+  box-shadow: 0 4px 40px 0 rgba(62, 73, 88, 0.08);
+  transition: transform 0.3s;
+  border: 2px solid transparent !important; 
+}
+
+.card:hover {
+  border: 2px solid #fdc501 !important;
+}
+
+.card-image {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.card-body {
+
+  text-align: center;
+  padding: 20px;
+}
+
+.card-title {
+  color: #3e4958;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 20px 0;
+}
+
+.card-text {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  color: #767e88;
+  font-size: 16px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+
+.taxi-price {
+  color: #fdc501;
+  font-weight: bold;
+}
+.texi-detail-inner{
+  font-weight: bold;
+}
+@media screen and (max-width: 950px) and (min-width:768px){
+  .card-text{
+      width: 90%;
+  }
+  .card-body{
+      padding: 20px 0px;
+  }
+}
+
+.btn-custom {
+  background-color: #6b46c1;
+  border-color: #6b46c1;
+}
+
+.btn-custom:hover {
+  background-color: #805ad5;
+  border-color: #805ad5;
+}
+
+.modal-dialog {
+  max-width: 80%;
+  /* Adjust max-width as per your design */
+}
+
+/* .modal-body {
+  padding: 2rem;
+} */
+

@@ -1,6 +1,7 @@
 <div class="row justify-content-center">
     <div *ngFor="let product of products"
-        class="card col-md-3 col-sm-5 col-10 border-1 surface-border border-round m-2 p-3 card-shadow" (click)="onCardClick(product)" [class.clickable]="isBookingDetailsRoute">
+        class="card col-md-3 col-sm-5 col-10 border-1 surface-border border-round m-2 p-3 card-shadow"
+        (click)="onCardClick(product)" [class.clickable]="isBookingDetailsRoute">
         <div class="card-image mb-3">
             <div class="image-wrapper d-flex justify-content-center align-items-center">
                 <img alt="Van" decoding="async" loading="lazy" [src]="product.ImageUrl" />
@@ -14,7 +15,15 @@
                     "-"}}</span></div>
             <div class="card-text"><span>AirCondition:</span><span class="texi-detail-inner">{{ product.AirCondition
                     ?"Yes":"No" }}</span></div>
-            <div class="card-text"><span>Price:</span><span class="taxi-price">{{ '$' + product.Price }} /km</span></div>
+            <div class="card-text"><span>Price:</span><span class="taxi-price">{{ '$' + product.Price }} /km</span>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary d-none" data-toggle="modal" id="ButtonIdddd" data-target="#bookingModal">
+    Launch demo modal
+</button> -->
+
+<!-- Modal -->

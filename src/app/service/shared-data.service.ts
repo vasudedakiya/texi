@@ -14,5 +14,6 @@ export class SharedDataService {
   toLatLng: { lat: number, lon: number } | undefined;
   PhoneNo : string = "919428729282";
   vehicle : Vehicles | undefined;
+  DateTime : Date = new Date()
 
 }
