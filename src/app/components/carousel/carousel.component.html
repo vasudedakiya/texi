@@ -9,12 +9,12 @@
         </div>
         <div class="card-body" [attr.id]="product.id">
             <h5 class="card-title">{{ product.VehicleName }}</h5>
-            <div class="card-text"><span>Passengers:</span><span class="texi-detail-inner">{{ product.Passengers ??
-                    "-"}}</span></div>
-            <div class="card-text"><span>Luggage:</span><span class="texi-detail-inner">{{ product.Luggage ??
-                    "-"}}</span></div>
-            <div class="card-text"><span>AirCondition:</span><span class="texi-detail-inner">{{ product.AirCondition
-                    ?"Yes":"No" }}</span></div>
+            <div class="card-text"><span>Passengers:</span><span class="texi-detail-inner">{{
+                    product.Passengers}}</span></div>
+            <div class="card-text"><span>Luggage:</span><span class="texi-detail-inner">{{ product.Luggage}}</span>
+            </div>
+            <div class="card-text"><span>AirCondition:</span><span class="texi-detail-inner">{{
+                    product.AirCondition?"Yes":"No" }}</span></div>
             <div class="card-text"><span>Price:</span><span class="taxi-price">{{ '$' + product.Price }} /km</span>
             </div>
         </div>

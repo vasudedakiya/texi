@@ -44,7 +44,7 @@ export class CarouselComponent implements OnInit {
 
   vehicleService = inject(VehicleService)
   isBookingDetailsRoute: boolean = false;
-  constructor(private _storage: Storage, public _activatedRoute : ActivatedRoute, private _router : Router,private _sharedData : SharedDataService) { }
+  constructor(private _storage: Storage, public _activatedRoute: ActivatedRoute, private _router: Router, private _sharedData: SharedDataService) { }
 
   ngOnInit(): void {
 
@@ -69,25 +69,7 @@ export class CarouselComponent implements OnInit {
     });
   }
 
-  onCardClick(vehicle : Vehicles) {
+  onCardClick(vehicle: Vehicles) {
     this.cardClick.emit(vehicle);
-    // this._sharedData.vehicle = vehicle;
-    // if (this._router.url.includes('booking-details')) {
-    //   this._router.navigate(['/user-details'],{
-    //     queryParams: {
-    //       fromLat: this._sharedData.fromLatLng?.lat,
-    //       fromLon: this._sharedData.fromLatLng?.lon,
-    //       toLat: this._sharedData.toLatLng?.lat,
-    //       toLon: this._sharedData.toLatLng?.lon,
-    //       cabTypId : vehicle.id,
-    //     }
-    //   });
-    // }
-
-    // if(this.isBookingDetailsRoute){
-    //   let modal = document.getElementById("BookingModalOpen") as HTMLElement;
-    //   modal.click();
-    // }
-
   }
 }

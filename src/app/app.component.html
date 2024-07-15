@@ -1,3 +1,4 @@
-<app-header></app-header>
+<app-header *ngIf="!isConfigRoute"></app-header>
+<!-- <app-dashboard-sidebar ></app-dashboard-sidebar> -->
 <router-outlet />
-<app-footer></app-footer>
+<app-footer *ngIf="!isConfigRoute"></app-footer>
