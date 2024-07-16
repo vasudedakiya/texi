@@ -38,5 +38,8 @@ export class DashboardCustomersComponent implements OnInit {
       }
     });
   }
+  signOut() {
+    this._vehicleService.signOut();
+  }
 
 }

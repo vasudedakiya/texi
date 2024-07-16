@@ -10,6 +10,8 @@ import { DashboardUpcomingTripsComponent } from './components/dashboard-upcoming
 import { DashboardTripHistoryComponent } from './components/dashboard-trip-history/dashboard-trip-history.component';
 import { DashboardCustomersComponent } from './components/dashboard-customers/dashboard-customers.component';
 import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';
+import { AuthGuard } from './auth.guard';
+import { DashboardLoginComponent } from './component/dashboard-login/dashboard-login.component';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
@@ -18,10 +20,35 @@ export const routes: Routes = [
     { path: 'contact-us', component: ContactUsComponent },
     { path: 'config', component: ConfigComponent },
     { path: 'booking-details', component: BookingDetailsComponent },
-    { path: 'config/cabs', component: DashboardCabsComponent },
-    { path: 'config/trips', component: DashboardTripsComponent },
-    { path: 'config/upcoming-trips', component: DashboardUpcomingTripsComponent },
-    { path: 'config/trip-history', component: DashboardTripHistoryComponent },
-    { path: 'config/customers', component: DashboardCustomersComponent },
-    { path: 'config/admin', component: DashboardAdminComponent },
+    { path: 'config/login', component: DashboardLoginComponent },
+    {
+        path: 'config/cabs',
+        component: DashboardCabsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'config/trips',
+        component: DashboardTripsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'config/upcoming-trips',
+        component: DashboardUpcomingTripsComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'config/trip-history',
+        component: DashboardTripHistoryComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'config/customers',
+        component: DashboardCustomersComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'config/admin',
+        component: DashboardAdminComponent,
+        canActivate: [AuthGuard]
+    },
 ];

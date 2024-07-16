@@ -3,6 +3,7 @@ import { Firestore, addDoc, collection, collectionData, deleteDoc, doc, getDoc, 
 import { Observable, from, map } from 'rxjs';
 import { AdminModel, UserDetails, Vehicles } from '../vehicle.interface';
 import { ref } from '@angular/fire/storage';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class VehicleService {
   userDetailCollection = collection(this.firestore,'BookingDetails')
   adminCollection = collection(this.firestore,'Admin')
   
-  constructor() { }
+  constructor(private _router: Router) { }
 
   getVehicles():Observable<Vehicles[]>{
     return collectionData(this.vehiclesCollection,{
@@ -138,6 +139,7 @@ export class VehicleService {
       map(snapshot => {
         const adminDoc = snapshot.docs[0];
         if (adminDoc) {
+          localStorage.setItem('userId', userId);
           return {
             id: adminDoc.id,
             UserId: adminDoc.data()['UserId'],
@@ -148,6 +150,13 @@ export class VehicleService {
         }
       })
     );
+  }
+
+  signOut() {
+    // Clear any stored authentication data (e.g., tokens, session info)
+    localStorage.clear();
+    // Navigate to the login page or home page
+    this._router.navigate(['/dashboard']);
   }
 
 }

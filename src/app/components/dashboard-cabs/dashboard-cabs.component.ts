@@ -153,4 +153,8 @@ export class DashboardCabsComponent implements OnInit {
       }
     });
   }
+
+  signOut() {
+    this._vehicleService.signOut();
+  }
 }

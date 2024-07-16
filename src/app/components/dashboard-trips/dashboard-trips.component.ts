@@ -38,4 +38,7 @@ export class DashboardTripsComponent implements OnInit {
     });
   }
 
+  signOut() {
+    this._vehicleService.signOut();
+  }
 }

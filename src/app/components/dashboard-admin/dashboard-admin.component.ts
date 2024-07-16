@@ -34,4 +34,8 @@ export class DashboardAdminComponent implements OnInit {
       }
     });
   }
+
+  signOut() {
+    this._vehicleService.signOut();
+  }
 }

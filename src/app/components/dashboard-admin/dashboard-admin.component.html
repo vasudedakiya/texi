@@ -202,6 +202,10 @@
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                        <button (click)="signOut()" class="btn btn-primary d-flex align-items-center">
+                            <i class="fa fa-user me-sm-1"></i>
+                            <span class="d-sm-inline d-none">Sign Out</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -228,7 +232,7 @@
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let admin of admins">
-                                           
+
                                             <td class="align-middle text-center">
                                                 <h6 class="mb-0 text-sm">{{admin.UserId}}</h6>
                                             </td>
@@ -236,7 +240,7 @@
                                                 <span
                                                     class="text-secondary text-xs font-weight-bold">{{admin.Password}}</span>
                                             </td>
-                                            
+
                                         </tr>
                                     </tbody>
                                 </table>
