@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { UserDetails } from '../../vehicle.interface';
 import { VehicleService } from '../../service/vehicle.service';
 import { Timestamp } from '@angular/fire/firestore';
-import { UserDetails } from '../../vehicle.interface';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-dashboard-trip-history',
+  selector: 'app-dashboard-customers',
   standalone: true,
   imports: [RouterModule,CommonModule],
-  templateUrl: './dashboard-trip-history.component.html',
-  styleUrl: './dashboard-trip-history.component.css'
+  templateUrl: './dashboard-customers.component.html',
+  styleUrl: './dashboard-customers.component.css'
 })
-export class DashboardTripHistoryComponent implements OnInit {
+export class DashboardCustomersComponent implements OnInit {
   isLoading = false;
-  trips: UserDetails[] = []
+  users: UserDetails[] = []
 
   constructor(private _vehicleService: VehicleService) { }
 
@@ -24,11 +24,12 @@ export class DashboardTripHistoryComponent implements OnInit {
 
   fatchTrips() {
     this.isLoading = true;
-    this._vehicleService.getTripHistory().subscribe({
-      next: (trips) => {
-        this.trips = trips.map(trip => ({
-          ...trip,
-          Date: (trip.Date instanceof Timestamp) ? trip.Date.toDate() : trip.Date
+    this._vehicleService.getCustomers().subscribe({
+      next: (users) => {
+        console.log(users)
+        this.users = users.map(users => ({
+          ...users,
+          Date: (users.Date instanceof Timestamp) ? users.Date.toDate() : users.Date
         }));
         this.isLoading = false;
       },
@@ -37,6 +38,5 @@ export class DashboardTripHistoryComponent implements OnInit {
       }
     });
   }
-
 
 }

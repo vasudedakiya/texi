@@ -16,4 +16,15 @@ export class SharedDataService {
   vehicle : Vehicles | undefined;
   DateTime : Date = new Date()
 
+
+  saveData() {
+    sessionStorage.setItem('sharedData', JSON.stringify(this));
+  }
+
+  loadData() {
+    const data = sessionStorage.getItem('sharedData');
+    if (data) {
+      Object.assign(this, JSON.parse(data));
+    }
+  }
 }

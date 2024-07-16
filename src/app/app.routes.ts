@@ -8,6 +8,8 @@ import { DashboardCabsComponent } from './components/dashboard-cabs/dashboard-ca
 import { DashboardTripsComponent } from './components/dashboard-trips/dashboard-trips.component';
 import { DashboardUpcomingTripsComponent } from './components/dashboard-upcoming-trips/dashboard-upcoming-trips.component';
 import { DashboardTripHistoryComponent } from './components/dashboard-trip-history/dashboard-trip-history.component';
+import { DashboardCustomersComponent } from './components/dashboard-customers/dashboard-customers.component';
+import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
@@ -20,4 +22,6 @@ export const routes: Routes = [
     { path: 'config/trips', component: DashboardTripsComponent },
     { path: 'config/upcoming-trips', component: DashboardUpcomingTripsComponent },
     { path: 'config/trip-history', component: DashboardTripHistoryComponent },
+    { path: 'config/customers', component: DashboardCustomersComponent },
+    { path: 'config/admin', component: DashboardAdminComponent },
 ];

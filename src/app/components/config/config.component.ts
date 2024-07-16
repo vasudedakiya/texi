@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { VehicleService } from '../../service/vehicle.service';
-import { Storage, getDownloadURL, ref, uploadBytes, uploadBytesResumable } from '@angular/fire/storage';
+import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 import { Vehicles } from '../../vehicle.interface';
 import { CommonService } from '../../service/common.service';
 import { TableModule } from 'primeng/table';

@@ -22581,7 +22581,7 @@
   .navbar-vertical.navbar-expand-xs .navbar-collapse {
     display: block;
     overflow: auto;
-    height: calc(100vh - 360px);
+    /* height: calc(100vh - 360px); */
   }
   
   .navbar-vertical.navbar-expand-xs>[class*="container"] {
@@ -22678,7 +22678,7 @@
     .navbar-vertical.navbar-expand-sm .navbar-collapse {
       display: block;
       overflow: auto;
-      height: calc(100vh - 360px);
+      /* height: calc(100vh - 360px); */
     }
   
     .navbar-vertical.navbar-expand-sm>[class*="container"] {
@@ -22778,7 +22778,7 @@
     .navbar-vertical.navbar-expand-md .navbar-collapse {
       display: block;
       overflow: auto;
-      height: calc(100vh - 360px);
+      /* height: calc(100vh - 360px); */
     }
   
     .navbar-vertical.navbar-expand-md>[class*="container"] {
@@ -22878,7 +22878,7 @@
     .navbar-vertical.navbar-expand-lg .navbar-collapse {
       display: block;
       overflow: auto;
-      height: calc(100vh - 360px);
+      /* height: calc(100vh - 360px); */
     }
   
     .navbar-vertical.navbar-expand-lg>[class*="container"] {
@@ -22978,7 +22978,7 @@
     .navbar-vertical.navbar-expand-xl .navbar-collapse {
       display: block;
       overflow: auto;
-      height: calc(100vh - 360px);
+      /* height: calc(100vh - 360px); */
     }
   
     .navbar-vertical.navbar-expand-xl>[class*="container"] {
@@ -23078,7 +23078,7 @@
     .navbar-vertical.navbar-expand-xxl .navbar-collapse {
       display: block;
       overflow: auto;
-      height: calc(100vh - 360px);
+      /* height: calc(100vh - 360px); */
     }
   
     .navbar-vertical.navbar-expand-xxl>[class*="container"] {
@@ -26668,5 +26668,84 @@
   (-ms-high-contrast: none) {
     .ps {
       overflow: auto !important;
+    }
+  }
+
+
+  .required::after {
+    content: '*';
+    color: red;
+}
+
+.vehicle-form {
+    border-radius: 10px;
+    width: 500px;
+    background-color: #f7f7f7;
+    padding: 20px;
+    box-shadow: 0 0 10px 10px  #f5f5f5;
+}
+
+.p-inputtext {
+    padding: 15px !important;
+}
+
+.logoUploadContainer {
+    display: -webkit-flex;
+    display: flex;
+    align-items: stretch;
+  
+    & .logoUploadInput {
+      border: 2px dashed #ccc;
+      border-radius: 5px;
+      position: relative;
+      padding: 20px;
+      text-align: center;
+      display: -webkit-flex;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+  
+    & .file-input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      cursor: pointer;
+      opacity: 0;
+    }
+  
+    & h4 {
+      margin: 12px 0 0;
+      font-weight: 400;
+      color: #777;
+    }
+  
+    & .logoPreview {
+      position: relative;
+      height: 112px;
+      width: 112px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 4px;
+      box-sizing: border-box;
+      display: -webkit-flex;
+      display: flex;
+      align-items: center;
+  
+      .logo-wrapper {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+      }
+  
+      & img {
+        max-width: 100%;
+        max-height: 100%;
+        margin: auto;
+      }
     }
   }

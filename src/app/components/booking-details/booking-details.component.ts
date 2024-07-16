@@ -49,7 +49,8 @@ export class BookingDetailsComponent implements OnInit {
     To: '',
     Distances: 0,
     Vehicle: '',
-    Rate: 0
+    Rate: 0,
+    Date: new Date()
   }
   // distance: number | undefined;
 
@@ -59,6 +60,7 @@ export class BookingDetailsComponent implements OnInit {
       const fromLon = parseFloat(params['fromLon']);
       const toLat = parseFloat(params['toLat']);
       const toLon = parseFloat(params['toLon']);
+      this._sharedDataService.loadData();
 
       if (!isNaN(fromLat) && !isNaN(fromLon) && !isNaN(toLat) && !isNaN(toLon)) {
         this.fromLatLng = { lat: fromLat, lon: fromLon };
@@ -129,8 +131,10 @@ export class BookingDetailsComponent implements OnInit {
       To: this.toText?.toString(),
       Distances: this.userDetails.Distances,
       Vehicle: this._sharedDataService.vehicle?.VehicleName,
-      Rate: Math.floor(Number(this.priceText))
+      Rate: Math.floor(Number(this.priceText)),
+      Date : this._sharedDataService.DateTime
     }
+    this._sharedDataService.saveData();
 
     this._vehicleService.addUserDetails(this.userDetails).subscribe({
       next: (data) => {
@@ -159,10 +163,10 @@ export class BookingDetailsComponent implements OnInit {
         }
       });
   }
-  
+
   findMinimumDistance(response: any): number {
     const distances: number[] = [];
-  
+
     function extractDistances(obj: any) {
       if (typeof obj === 'object' && obj !== null) {
         for (const key in obj) {
@@ -174,17 +178,17 @@ export class BookingDetailsComponent implements OnInit {
         }
       }
     }
-  
+
     // Start extraction from the response object
     extractDistances(response);
-  
+
     // Filter out zero distances and find the minimum distance
     const validDistances = distances.filter(distance => distance > 0);
     const minDistance = Math.min(...validDistances);
-  
+
     return minDistance / 1000; // Convert meters to kilometers
   }
-  
+
 
   onCardClick(vehicle: any): void {
     this._sharedDataService.vehicle = vehicle;
