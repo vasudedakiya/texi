@@ -47,10 +47,9 @@ export class VehicleService {
     );
   }
 
-  updateVehicle(id:string,vehicle:Vehicles):Observable<void>{
-    const docRef = doc(this.firestore, 'Vehicles/',id);
-    const promise = setDoc(docRef,vehicle);
-    return from(promise);
+  updateVehicle(id: string, vehicle: Vehicles): Observable<void> {
+    const docRef = doc(this.firestore, `Vehicles/${id}`); // Corrected reference
+    return from(setDoc(docRef, vehicle));
   }
 
   addPhoneNumber(number:string):Observable<string>{

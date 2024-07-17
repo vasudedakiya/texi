@@ -11,7 +11,7 @@ import { DashboardTripHistoryComponent } from './components/dashboard-trip-histo
 import { DashboardCustomersComponent } from './components/dashboard-customers/dashboard-customers.component';
 import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';
 import { AuthGuard } from './auth.guard';
-import { DashboardLoginComponent } from './component/dashboard-login/dashboard-login.component';
+import { DashboardLoginComponent } from './components/dashboard-login/dashboard-login.component';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'dashboard' },

@@ -48,6 +48,8 @@ export class DashboardCabsComponent implements OnInit {
   logoBase64string: string = ''
   vehicals: Vehicles[] = [];
   file!: File;
+  editMode: boolean = false;
+  currentVehicleId: string = "";
 
   constructor(private _vehicleService: VehicleService,
     private _storage: Storage,
@@ -77,6 +79,13 @@ export class DashboardCabsComponent implements OnInit {
     this.vehicleInformation.get('ImageUrl')?.setValue('');
   }
 
+  closeVehicleModal(){
+    this.visible = false
+    this.logoBase64string = "";
+    this.vehicleInformation.reset();
+    this.editMode = false;
+  }
+
   private updateVehicleImages() {
     this.vehicals.forEach(vehicle => {
       const imageRef = ref(this._storage, vehicle.ImageUrl);
@@ -92,26 +101,54 @@ export class DashboardCabsComponent implements OnInit {
 
   async onSubmit() {
     this.isCreateLoading = true;
-    const storageRef = ref(this._storage, `Vehicles/${this.file.name}`);
-    try {
-      await uploadBytes(storageRef, this.file);
-    }
-    catch (error) { }
-    const dataToAdd = { ...this.vehicleInformation.value, ImageUrl: `Vehicles/${this.file.name}` }
-    this._vehicleService.addVechicles(dataToAdd).subscribe({
-      next: (data) => {
+    let imageUrl = this.editMode ? this.vehicleInformation.value.ImageUrl : `Vehicles/${this.file.name}`;
+  
+    // Check if a new file is provided
+    if (this.file) {
+      const storageRef = ref(this._storage, imageUrl);
+      try {
+        await uploadBytes(storageRef, this.file);
+      } catch (error) {
         this.isCreateLoading = false;
-        this._messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
-        this.vehicleInformation.reset();
-        this.cancleVehileLogo()
-        this.visible = false;
-      },
-      error: (err) => {
-        this.isCreateLoading = false;
-        this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Error' });
+        this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Error uploading image' });
+        return; // Exit early if image upload fails
       }
-    });
+    }
+  
+    const dataToAdd = { ...this.vehicleInformation.value, ImageUrl: imageUrl };
+  
+    if (this.editMode) {
+      this._vehicleService.updateVehicle(this.currentVehicleId, dataToAdd).subscribe({
+        next: (data) => {
+          this.isCreateLoading = false;
+          this._messageService.add({ severity: 'success', summary: 'Success', detail: 'Vehicle Updated' });
+          this.vehicleInformation.reset();
+          this.cancleVehileLogo();
+          this.visible = false;
+          this.editMode = false; // Reset the flag
+        },
+        error: (err) => {
+          this.isCreateLoading = false;
+          this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Error updating vehicle' });
+        }
+      });
+    } else {
+      this._vehicleService.addVechicles(dataToAdd).subscribe({
+        next: (data) => {
+          this.isCreateLoading = false;
+          this._messageService.add({ severity: 'success', summary: 'Success', detail: 'Vehicle Added' });
+          this.vehicleInformation.reset();
+          this.cancleVehileLogo();
+          this.visible = false;
+        },
+        error: (err) => {
+          this.isCreateLoading = false;
+          this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Error adding vehicle' });
+        }
+      });
+    }
   }
+  
 
   handleFileInput(event: Event) {
     const that = this;
@@ -156,5 +193,21 @@ export class DashboardCabsComponent implements OnInit {
 
   signOut() {
     this._vehicleService.signOut();
+  }
+
+  editVehicle(vehicle: Vehicles) {
+    this.currentVehicleId = vehicle.id; // Store the current vehicle ID
+    this.editMode = true; // Set edit mode to true
+    this.vehicleInformation.patchValue({
+      // ImageUrl: vehicle.ImageUrl,
+      VehicleName: vehicle.VehicleName,
+      Desc: vehicle.Desc,
+      Price: vehicle.Price,
+      Passengers: vehicle.Passengers,
+      AirCondition: vehicle.AirCondition,
+      Luggage: vehicle.Luggage
+    });
+    this.logoBase64string = vehicle.ImageUrl;
+    this.visible = true; // Open the dialog
   }
 }

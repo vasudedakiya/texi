@@ -17,6 +17,7 @@
                     product.AirCondition?"Yes":"No" }}</span></div>
             <div class="card-text"><span>Price:</span><span class="taxi-price">{{ '$' + product.Price }} /km</span>
             </div>
+            <button class="btn btn-secondary my-2 rounded-3" *ngIf="isBookingDetailsRoute" (click)="onCardClick(product)">Book Now</button>
         </div>
     </div>
 </div>

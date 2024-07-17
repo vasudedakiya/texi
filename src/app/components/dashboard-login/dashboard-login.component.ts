@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { VehicleService } from '../../service/vehicle.service';
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './dashboard-login.component.html',
   styleUrl: './dashboard-login.component.css'
 })
-export class DashboardLoginComponent {
+export class DashboardLoginComponent implements OnInit {
   loginForm: FormGroup;
   isLoading = false;
   errorMessage: string | null = null;
@@ -27,6 +27,14 @@ export class DashboardLoginComponent {
       userId: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  ngOnInit(): void {
+    const isLoggedIn = !!localStorage.getItem('userId');
+
+    if (isLoggedIn) {
+      this._router.navigate(['config/trips']);
+    }
   }
 
   onSubmit() {
