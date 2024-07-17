@@ -50,6 +50,7 @@ export class DashboardCabsComponent implements OnInit {
   file!: File;
   editMode: boolean = false;
   currentVehicleId: string = "";
+  oldImage: string = "";
 
   constructor(private _vehicleService: VehicleService,
     private _storage: Storage,
@@ -60,6 +61,7 @@ export class DashboardCabsComponent implements OnInit {
   ngOnInit() {
     // this.vehicals = this.commonService.customCarouselCards;
     this.fetchVehicals()
+    this.updateImageUrlValidator();
   }
 
   fetchVehicals() {
@@ -77,13 +79,16 @@ export class DashboardCabsComponent implements OnInit {
   cancleVehileLogo() {
     this.logoBase64string = "";
     this.vehicleInformation.get('ImageUrl')?.setValue('');
+    this.oldImage = "";
   }
 
-  closeVehicleModal(){
+  closeVehicleModal() {
     this.visible = false
     this.logoBase64string = "";
     this.vehicleInformation.reset();
     this.editMode = false;
+    this.oldImage = "";
+    this.updateImageUrlValidator();
   }
 
   private updateVehicleImages() {
@@ -101,22 +106,26 @@ export class DashboardCabsComponent implements OnInit {
 
   async onSubmit() {
     this.isCreateLoading = true;
-    let imageUrl = this.editMode ? this.vehicleInformation.value.ImageUrl : `Vehicles/${this.file.name}`;
-  
-    // Check if a new file is provided
-    if (this.file) {
-      const storageRef = ref(this._storage, imageUrl);
-      try {
-        await uploadBytes(storageRef, this.file);
-      } catch (error) {
-        this.isCreateLoading = false;
-        this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Error uploading image' });
-        return; // Exit early if image upload fails
+    let imageUrl = "";
+    if (this.editMode && this.vehicleInformation.value.ImageUrl == null) {
+      imageUrl = this.oldImage
+    }
+    else {
+      if (this.file) {
+        imageUrl =  `Vehicles/${this.file.name}`
+        const storageRef = ref(this._storage, imageUrl);
+        try {
+          await uploadBytes(storageRef, this.file);
+        } catch (error) {
+          this.isCreateLoading = false;
+          this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Error uploading image' });
+          return; // Exit early if image upload fails
+        }
       }
     }
-  
+
     const dataToAdd = { ...this.vehicleInformation.value, ImageUrl: imageUrl };
-  
+
     if (this.editMode) {
       this._vehicleService.updateVehicle(this.currentVehicleId, dataToAdd).subscribe({
         next: (data) => {
@@ -148,7 +157,7 @@ export class DashboardCabsComponent implements OnInit {
       });
     }
   }
-  
+
 
   handleFileInput(event: Event) {
     const that = this;
@@ -207,7 +216,19 @@ export class DashboardCabsComponent implements OnInit {
       AirCondition: vehicle.AirCondition,
       Luggage: vehicle.Luggage
     });
+    this.oldImage = vehicle.ImageUrl;
     this.logoBase64string = vehicle.ImageUrl;
     this.visible = true; // Open the dialog
+    this.updateImageUrlValidator();
+  }
+
+  private updateImageUrlValidator() {
+    const imageUrlControl = this.vehicleInformation.get('ImageUrl');
+    if (this.editMode) {
+      imageUrlControl?.clearValidators();
+    } else {
+      imageUrlControl?.setValidators([Validators.required]);
+    }
+    imageUrlControl?.updateValueAndValidity();
   }
 }

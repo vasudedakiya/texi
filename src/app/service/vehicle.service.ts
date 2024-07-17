@@ -97,11 +97,11 @@ export class VehicleService {
   }
 
   getCustomers(): Observable<UserDetails[]> {
-    const upcomingTripsQuery = query(this.userDetailCollection, orderBy('Email'));
+    const upcomingTripsQuery = query(this.userDetailCollection, orderBy('MoNumber'));
   
     return from(getDocs(upcomingTripsQuery)).pipe(
       map(snapshot => {
-        const uniqueEmails = new Set<string>();
+        const uniqueMobiles = new Set<string>();
         const uniqueCustomers: UserDetails[] = [];
   
         snapshot.docs.forEach(doc => {
@@ -111,8 +111,8 @@ export class VehicleService {
           } as unknown as UserDetails;
   
           // Check if the email is already in the Set
-          if (!uniqueEmails.has(customer.Email)) {
-            uniqueEmails.add(customer.Email);
+          if (!uniqueMobiles.has(customer.MoNumber)) {
+            uniqueMobiles.add(customer.MoNumber);
             uniqueCustomers.push(customer);
           }
         });
@@ -152,10 +152,8 @@ export class VehicleService {
   }
 
   signOut() {
-    // Clear any stored authentication data (e.g., tokens, session info)
     localStorage.clear();
-    // Navigate to the login page or home page
-    this._router.navigate(['/dashboard']);
+    this._router.navigate(['/config/login']);
   }
 
 }

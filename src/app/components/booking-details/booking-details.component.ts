@@ -8,7 +8,7 @@ import { SharedDataService } from '../../service/shared-data.service';
 import { UserDetails } from '../../vehicle.interface';
 import { VehicleService } from '../../service/vehicle.service';
 import { MessageService } from 'primeng/api';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-booking-details',
@@ -120,35 +120,38 @@ export class BookingDetailsComponent implements OnInit {
     // this.toText = 'Rajkot West Taluka, રાજકોટ, Gujarat, 360005, India'
   }
 
-  onSubmit() {
-    this.isCreateLoading = true;
+  onSubmit(userForm: NgForm) {
+    if (userForm.valid) {
 
-    this.userDetails = {
-      Name: this.userName,
-      Email: this.email,
-      MoNumber: this.mobileNo,
-      From: this.fromText?.toString(),
-      To: this.toText?.toString(),
-      Distances: this.userDetails.Distances,
-      Vehicle: this._sharedDataService.vehicle?.VehicleName,
-      Rate: Math.floor(Number(this.priceText)),
-      Date : this._sharedDataService.DateTime
-    }
-    this._sharedDataService.saveData();
+      this.isCreateLoading = true;
 
-    this._vehicleService.addUserDetails(this.userDetails).subscribe({
-      next: (data) => {
-        this.isCreateLoading = false;
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
-        this.visible = false;
-        this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
-        document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
-      },
-      error: (err) => {
-        this.isCreateLoading = false;
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error' });
+      this.userDetails = {
+        Name: this.userName,
+        Email: this.email,
+        MoNumber: this.mobileNo,
+        From: this.fromText?.toString(),
+        To: this.toText?.toString(),
+        Distances: this.userDetails.Distances,
+        Vehicle: this._sharedDataService.vehicle?.VehicleName,
+        Rate: Math.floor(Number(this.priceText)),
+        Date: this._sharedDataService.DateTime
       }
-    });
+      this._sharedDataService.saveData();
+
+      this._vehicleService.addUserDetails(this.userDetails).subscribe({
+        next: (data) => {
+          this.isCreateLoading = false;
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
+          this.visible = false;
+          this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
+          document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
+        },
+        error: (err) => {
+          this.isCreateLoading = false;
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error' });
+        }
+      });
+    }
   }
 
   findDistance(): void {
@@ -188,7 +191,6 @@ export class BookingDetailsComponent implements OnInit {
 
     return minDistance / 1000; // Convert meters to kilometers
   }
-
 
   onCardClick(vehicle: any): void {
     this._sharedDataService.vehicle = vehicle;

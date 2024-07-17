@@ -18,7 +18,7 @@ export const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent },
     { path: 'about-us', component: AboutUsComponent },
     { path: 'contact-us', component: ContactUsComponent },
-    { path: 'config', component: ConfigComponent },
+    // { path: 'config', component: ConfigComponent },
     { path: 'booking-details', component: BookingDetailsComponent },
     { path: 'config/login', component: DashboardLoginComponent },
     {
