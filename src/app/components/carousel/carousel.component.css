@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 95%;
-    max-height: 400px; /* Adjust this value as needed */
+    max-height: auto; /* Adjust this value as needed */
     box-shadow: 0 4px 40px 0 rgba(62, 73, 88, 0.08);
     transition: transform 0.3s;
     border: 2px solid transparent !important; 
@@ -22,8 +22,10 @@
 
 .card-image img {
     max-width: 100%;
-    height: auto;
+    max-height: 100px; /* Ensure image doesn't exceed container height */
+    height: 100px;
     border-radius: 10px;
+    object-fit: contain !important;
 }
 
 .card-body {

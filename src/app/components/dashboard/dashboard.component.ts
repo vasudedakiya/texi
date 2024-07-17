@@ -105,26 +105,26 @@ export class DashboardComponent implements OnInit {
     this.toLatLng = this._sharedDataService.toLatLng = { lat: parseFloat(suggestion.lat), lon: parseFloat(suggestion.lon) };
   }
 
-  // combineDateTime() {
-  //   const datePart = this.date;
-  //   const timePart = this.selectedTime || new Date(); // Default to current time if selectedTime is undefined
+  combineDateTime() {
+    const datePart = this.date;
+    const timePart = this.selectedTime || new Date(); // Default to current time if selectedTime is undefined
 
-  //   const combinedDateTime = new Date(
-  //     datePart.getFullYear(),
-  //     datePart.getMonth(),
-  //     datePart.getDate(),
-  //     timePart.getHours(),
-  //     timePart.getMinutes(),
-  //     timePart.getSeconds()
-  //   );
+    const combinedDateTime = new Date(
+      datePart.getFullYear(),
+      datePart.getMonth(),
+      datePart.getDate(),
+      timePart.getHours(),
+      timePart.getMinutes(),
+      timePart.getSeconds()
+    );
 
-    
-  //   this._sharedDataService.saveData();
-  // }
+    this._sharedDataService.DateTime = combinedDateTime;
+    this._sharedDataService.saveData();
+  }
 
   orderTaxiNow() {
     if (this.fromLatLng && this.toLatLng) {
-      this._sharedDataService.DateTime = this.date;
+      this.combineDateTime();
       this._router.navigate(['/booking-details'], {
         queryParams: {
           fromLat: this.fromLatLng.lat,

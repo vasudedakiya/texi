@@ -26749,3 +26749,12 @@
       }
     }
   }
+
+  .footer {
+    /* background-color: yellow !important; */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fde080; /* Optional: Set your desired background color */
+    padding: 10px 0; /* Adjust padding as needed */
+  }

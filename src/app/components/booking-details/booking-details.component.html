@@ -82,31 +82,44 @@
               </div>
               <!-- <h1 class="h4 fw-bold mb-4">Just Last step</h1> -->
               <div class="border p-3 rounded">
-                <form (ngSubmit)="onSubmit()">
+                <form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm" novalidate>
                   <div class="mb-3">
                     <label for="userName" class="form-label">Full Name:</label>
-                    <input type="text" id="userName" name="userName" [(ngModel)]="userName" required
-                      class="form-control">
+                    <input type="text" id="userName" name="userName" [(ngModel)]="userName" required class="form-control" #userNameField="ngModel">
+                    <div *ngIf="userNameField.invalid && (userNameField.dirty || userNameField.touched)" class="text-danger">
+                      <div *ngIf="userNameField.errors?.['required']">Full Name is required.</div>
+                    </div>
                   </div>
+                
                   <div class="mb-3">
                     <label for="mobileNo" class="form-label">Mobile No:</label>
-                    <input type="tel" id="mobileNo" name="mobileNo" [(ngModel)]="mobileNo" required pattern="[0-9]{10}"
-                      class="form-control">
+                    <input type="tel" id="mobileNo" name="mobileNo" [(ngModel)]="mobileNo" required pattern="[0-9]{10}" class="form-control" #mobileNoField="ngModel">
+                    <div *ngIf="mobileNoField.invalid && (mobileNoField.dirty || mobileNoField.touched)" class="text-danger">
+                      <div *ngIf="mobileNoField.errors?.['required']">Mobile No is required.</div>
+                      <div *ngIf="mobileNoField.errors?.['pattern']">Mobile No must be 10 digits.</div>
+                    </div>
                   </div>
+                
                   <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="email" id="email" name="email" [(ngModel)]="email" required class="form-control">
+                    <input type="email" id="email" name="email" [(ngModel)]="email" required class="form-control" #emailField="ngModel">
+                    <div *ngIf="emailField.invalid && (emailField.dirty || emailField.touched)" class="text-danger">
+                      <div *ngIf="emailField.errors?.['required']">Email is required.</div>
+                      <div *ngIf="emailField.errors?.['email']">Please enter a valid email address.</div>
+                    </div>
                   </div>
+                
                   <div class="mb-3">
                     <p class="small text-muted">Your booking will be effective from the scheduled date.</p>
                   </div>
                   <div class="mb-3">
                     <p class="small text-muted">Booking Date: July 14, 2024</p>
                   </div>
+                
                   <div class="d-flex justify-content-center align-items-center">
-                    <button type="submit" class="btn btn-outline-warning">Proceed to Booking</button>
+                    <button type="submit" class="btn btn-outline-warning" [disabled]="userForm.invalid">Proceed to Booking</button>
                   </div>
-                </form>
+                </form>                
               </div>
             </div>
             <div class="col-md-4 cal-sm-12 bg-light p-4 d-flex align-items-center">
