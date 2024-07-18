@@ -205,7 +205,7 @@
                         <p-button class="m-2 btn-sm" icon="pi pi-plus" [text]="true" [raised]="true" severity="info"
                             label="Add" (click)="visible = true" />
 
-                        <button (click)="signOut()" class="btn btn-primary d-flex align-items-center mt-2">
+                        <button (click)="signOut()" class="btn btn-warning d-flex align-items-center mt-2">
                             <i class="fa fa-user me-sm-1"></i>
                             <span class="d-sm-inline d-none">Sign Out</span>
                         </button>
@@ -225,6 +225,8 @@
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
+                                <p-toast />
+                                <p-confirmDialog />
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
