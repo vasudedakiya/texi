@@ -1,3 +1,7 @@
 <app-header *ngIf="!isConfigRoute"></app-header>
 <router-outlet />
 <app-footer *ngIf="!isConfigRoute"></app-footer>
+
+<a *ngIf="!isConfigRoute" href="https://wa.me/91{{this._sharedDataService.PhoneNo}}" class="whatsapp-float" target="_blank">
+    <i class="fa fa-whatsapp my-float"></i>
+</a>

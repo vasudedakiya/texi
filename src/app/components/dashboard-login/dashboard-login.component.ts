@@ -30,7 +30,7 @@ export class DashboardLoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const isLoggedIn = !!localStorage.getItem('userId');
+    const isLoggedIn = !!sessionStorage.getItem('userId');
 
     if (isLoggedIn) {
       this._router.navigate(['config/trips']);

@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonService } from '../../service/common.service';
+import { SharedDataService } from '../../service/shared-data.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,6 +10,8 @@ import { CommonService } from '../../service/common.service';
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {
+
+  constructor(readonly commonService: CommonService, readonly _sharedDataService: SharedDataService) { }
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
@@ -20,6 +23,4 @@ export class FooterComponent {
       container.style.backgroundPositionY = -(scrollTop * speed) + 'px';
     }
   }
-
-  constructor(readonly commonService: CommonService) { }
 }

@@ -52,10 +52,22 @@ export class VehicleService {
     return from(setDoc(docRef, vehicle));
   }
 
+  getPhoneNumber():Observable<string>{
+    return collectionData(this.websiteDetailCollection,{
+      idField: 'id'
+    }) as Observable<any>;
+  }
+
   addPhoneNumber(number:string):Observable<string>{
     const promise = addDoc(this.websiteDetailCollection,{'PhoneNo':number}).then(res=>res.id);
     return from(promise);
   }
+
+  updatePhoneNumber(number:string,id:string):Observable<void>{
+    const docRef = doc(this.firestore, `WebsiteDetail/${id}`); // Corrected reference
+    return from(setDoc(docRef, {'PhoneNo':number}));
+  }
+
 
   addUserDetails(userDetails:UserDetails):Observable<string>{
     const promise = addDoc(this.userDetailCollection,userDetails).then(res => res.id);
@@ -138,7 +150,7 @@ export class VehicleService {
       map(snapshot => {
         const adminDoc = snapshot.docs[0];
         if (adminDoc) {
-          localStorage.setItem('userId', userId);
+          sessionStorage.setItem('userId', userId);
           return {
             id: adminDoc.id,
             UserId: adminDoc.data()['UserId'],
@@ -152,7 +164,7 @@ export class VehicleService {
   }
 
   signOut() {
-    localStorage.clear();
+    sessionStorage.clear();
     this._router.navigate(['/config/login']);
   }
 
