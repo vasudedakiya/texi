@@ -4,7 +4,7 @@
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
-            <a class="navbar-brand m-0"  routerLink="/dashboard" >
+            <a class="navbar-brand m-0" routerLink="/dashboard">
                 <img src="assets/images/logo.svg" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold">Dashboard</span>
             </a>
@@ -202,7 +202,7 @@
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                        <button (click)="signOut()" class="btn btn-primary d-flex align-items-center mt-2">
+                        <button (click)="signOut()" class="btn btn-warning d-flex align-items-center mt-2">
                             <i class="fa fa-user me-sm-1"></i>
                             <span class="d-sm-inline d-none">Sign Out</span>
                         </button>
@@ -222,12 +222,13 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th
+                                                class="text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Name</th>
                                             <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Email</th>
-                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Mobile No.</th>
+                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Email</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -235,13 +236,13 @@
                                             <td class="align-middle text-center">
                                                 <h6 class="mb-0 text-sm">{{user.Name}}</h6>
                                             </td>
-                                            <td class="align-middle">
-                                                <span
-                                                    class="text-secondary text-xs font-weight-bold">{{user.Email}}</span>
-                                            </td>
                                             <td>
                                                 <span
                                                     class="text-secondary text-xs font-weight-bold">{{user.MoNumber}}</span>
+                                            </td>
+                                            <td class="align-middle">
+                                                <span
+                                                    class="text-secondary text-xs font-weight-bold">{{user.Email}}</span>
                                             </td>
                                         </tr>
                                     </tbody>
