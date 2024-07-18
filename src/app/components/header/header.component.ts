@@ -11,5 +11,5 @@ import { SharedDataService } from '../../service/shared-data.service';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  constructor(readonly sharedDataService: SharedDataService) { }
+  constructor(readonly _sharedDataService: SharedDataService) { }
 }

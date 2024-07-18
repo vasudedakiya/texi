@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
+import { SharedDataService } from '../../service/shared-data.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -11,5 +12,7 @@ import {RouterLink} from "@angular/router";
   styleUrl: './contact-us.component.css'
 })
 export class ContactUsComponent {
+
+  constructor(readonly _sharedDataService : SharedDataService){}
 
 }

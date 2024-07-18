@@ -12,10 +12,13 @@ export class SharedDataService {
   toText: string | undefined;
   fromLatLng: { lat: number, lon: number } | undefined;
   toLatLng: { lat: number, lon: number } | undefined;
-  PhoneNo : string = "919428729282";
-  vehicle : Vehicles | undefined;
-  DateTime : Date = new Date()
+  PhoneNo: string = "";
+  vehicle: Vehicles | undefined;
+  DateTime: Date = new Date();
 
+  savePhoneNo() {
+    sessionStorage.setItem('PhoneNo', this.PhoneNo)
+  }
 
   saveData() {
     sessionStorage.setItem('sharedData', JSON.stringify(this));
