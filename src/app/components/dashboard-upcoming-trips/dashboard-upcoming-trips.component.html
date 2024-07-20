@@ -6,7 +6,7 @@
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" routerLink="/dashboard">
                 <img src="assets/images/logo.svg" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">Dashboard</span>
+                 
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -202,6 +202,7 @@
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+                        <app-generate-invoice></app-generate-invoice>
                         <button (click)="signOut()" class="btn btn-warning d-flex align-items-center mt-2">
                             <i class="fa fa-user me-sm-1"></i>
                             <span class="d-sm-inline d-none">Sign Out</span>
@@ -238,6 +239,8 @@
                                                 Mobile No.</th>
                                             <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Price</th>
+                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Download</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -274,6 +277,9 @@
                                             <td>
                                                 <span class="badge badge-sm bg-gradient-success">{{trip.Rate | number:
                                                     '1.0-0' }}</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-sm bg-gradient-primary p-0"><app-download-journey-details [downloadData]="trip"></app-download-journey-details></span>
                                             </td>
                                         </tr>
                                     </tbody>

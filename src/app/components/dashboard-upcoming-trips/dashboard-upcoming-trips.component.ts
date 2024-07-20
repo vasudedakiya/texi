@@ -4,11 +4,13 @@ import { RouterModule } from '@angular/router';
 import { VehicleService } from '../../service/vehicle.service';
 import { UserDetails } from '../../vehicle.interface';
 import { Timestamp } from '@angular/fire/firestore';
+import { DownloadJourneyDetailsComponent } from '../download-journey-details/download-journey-details.component';
+import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
 
 @Component({
   selector: 'app-dashboard-upcoming-trips',
   standalone: true,
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule,CommonModule,DownloadJourneyDetailsComponent,GenerateInvoiceComponent],
   templateUrl: './dashboard-upcoming-trips.component.html',
   styleUrl: './dashboard-upcoming-trips.component.css'
 })

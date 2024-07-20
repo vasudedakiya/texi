@@ -9,6 +9,8 @@ import { UserDetails } from '../../vehicle.interface';
 import { VehicleService } from '../../service/vehicle.service';
 import { MessageService } from 'primeng/api';
 import { FormsModule, NgForm } from '@angular/forms';
+import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
+import { emailJsPK, emailJsServiceId, emailJsTemplateId } from '../../firebase.config';
 
 @Component({
   selector: 'app-booking-details',
@@ -20,6 +22,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class BookingDetailsComponent implements OnInit {
   @ViewChild('bookingModalOpenButton', { static: false }) bookingModalOpenButton!: ElementRef;
+  @ViewChild('bookingModal', { static: false }) bookingModal!: ElementRef;
   fromLatLng: { lat: number, lon: number } | undefined;
   toLatLng: { lat: number, lon: number } | undefined;
 
@@ -91,14 +94,6 @@ export class BookingDetailsComponent implements OnInit {
         this.fromText = this._sharedDataService.fromText;
       }
 
-      // timer(2000).pipe(
-      //   switchMap(() => this._locationIqService.direction(this.fromLatLng?.lat!, this.fromLatLng?.lon!, this.toLatLng?.lat!, this.toLatLng?.lon!))
-      // ).subscribe({
-      //   next: (res) => {
-      //     this.distance = (res.routes[0].distance) / 1000;
-      //   }
-      // })
-
       if (this._sharedDataService.toText == null) {
         timer(1000).pipe(
           switchMap(() => this._locationIqService.reverseGeocoding(this.toLatLng?.lat!, this.toLatLng?.lon!))
@@ -115,9 +110,6 @@ export class BookingDetailsComponent implements OnInit {
     else {
       console.error('fromLatLng or toLatLng is undefined');
     }
-    // this.fromText = 'Narsinh Mehta Statue, Ahmedabad one mall street, Vastrapur, Vejalpur Taluka, Ahmedabad District, Gujarat, 380054, India'
-    // this.distance = 239.93
-    // this.toText = 'Rajkot West Taluka, રાજકોટ, Gujarat, 360005, India'
   }
 
   onSubmit(userForm: NgForm) {
@@ -143,8 +135,37 @@ export class BookingDetailsComponent implements OnInit {
           this.isCreateLoading = false;
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
           this.visible = false;
-          this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
-          document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
+
+          const templateParams = {
+            Name: this.userDetails.Name,
+            Email: this.userDetails.Email,
+            MoNumber: this.userDetails.MoNumber,
+            From: this.userDetails.From,
+            To: this.userDetails.To,
+            Vehicle: this.userDetails.Vehicle,
+            Date: this.userDetails.Date,
+            Rate: this.userDetails.Rate,
+          };
+
+          // if (this.bookingModal) {
+          //   const modal = new bootstrap.Modal(this.bookingModal.nativeElement);
+          //   modal.hide();
+          // }
+
+          emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams,{publicKey:emailJsPK})
+            .then(
+              (response) => {
+                console.log('SUCCESS!', response);
+              },
+              (error) => {
+                console.log('FAILED...', error);
+              }
+            );
+
+            this._router.navigate(['/dashboard']);
+
+          // this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
+          // document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
         },
         error: (err) => {
           this.isCreateLoading = false;

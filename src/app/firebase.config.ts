@@ -7,6 +7,12 @@ export const firebaseConfig = {
   appId: "1:136248075415:web:ebe235a2a437c0abc335d2"
 };
 
-export const locationIqKey: string = "pk.0335047998a1719169a05e9551040793"
+export const locationIqKey: string = "pk.0335047998a1719169a05e9551040793";
+
+export const emailJsPK: string = "zvWkfi-_m5cYvxwjl";
+
+export const emailJsServiceId : string = "service_xlru4fe";
+
+export const emailJsTemplateId : string = "template_mnfooob";
 
 // export const locationIqKey: string = ""

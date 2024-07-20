@@ -1,0 +1,57 @@
+<p-button class="m-2 btn-sm" icon="pi pi-plus" [text]="true" [raised]="true" severity="info" label="Generate Invoice"
+    (click)="visibleTrip = true" />
+
+<p-dialog header="Add Trip" [modal]="true" [(visible)]="visibleTrip" [style]="{ width: '70rem' }"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true" (onHide)="closeTripModal()">
+    <form [formGroup]="tripInformation">
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Name" class="font-semibold w-6rem required">Name</label>
+            <input pInputText type="text" formControlName="Name" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Email" class="font-semibold w-6rem required">Email</label>
+            <input pInputText type="email" formControlName="Email" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="MoNumber" class="font-semibold w-6rem required">Mobile No.</label>
+            <input pInputText type="tel" formControlName="MoNumber" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="From" class="font-semibold w-6rem required">From</label>
+            <input pInputText type="text" formControlName="From" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="To" class="font-semibold w-6rem required">To</label>
+            <input pInputText type="text" formControlName="To" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Vehicle" class="font-semibold w-6rem required">Vehicle</label>
+            <input pInputText type="text" formControlName="Vehicle" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Rate" class="font-semibold w-6rem required">Rate</label>
+            <input pInputText type="number" formControlName="Rate" class="flex-auto" autocomplete="off" />
+        </div>
+
+        <div class="flex align-items-center gap-3 mb-3">
+            <label for="Date" class="font-semibold w-6rem required">Date</label>
+            <p-calendar [showIcon]="true" formControlName="Date" [dateFormat]="'dd/mm/yy'" [showTime]="true"
+                [hourFormat]="'12'"></p-calendar>
+
+        </div>
+
+        <div class="flex justify-content-center gap-2">
+            <p-button label="Cancel" severity="secondary" (click)="closeTripModal()" />
+            <p-button label="Save" [disabled]="tripInformation.invalid" [loading]="isTripLoading"
+                (click)="onSubmitTrip()" type="submit" />
+        </div>
+    </form>
+</p-dialog>
+
+<app-download-journey-details #downloadJourneyDetails *ngIf="visibleTrip"></app-download-journey-details>
