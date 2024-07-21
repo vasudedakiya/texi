@@ -147,10 +147,7 @@ export class BookingDetailsComponent implements OnInit {
             Rate: this.userDetails.Rate,
           };
 
-          // if (this.bookingModal) {
-          //   const modal = new bootstrap.Modal(this.bookingModal.nativeElement);
-          //   modal.hide();
-          // }
+         
 
           emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams,{publicKey:emailJsPK})
             .then(
@@ -162,10 +159,8 @@ export class BookingDetailsComponent implements OnInit {
               }
             );
 
-            this._router.navigate(['/dashboard']);
-
-          // this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
-          // document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
+          this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
+          document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
         },
         error: (err) => {
           this.isCreateLoading = false;
