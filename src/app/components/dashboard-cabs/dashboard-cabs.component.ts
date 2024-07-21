@@ -16,6 +16,7 @@ import { Vehicles } from '../../vehicle.interface';
 import { VehicleService } from '../../service/vehicle.service';
 import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 import { RouterModule } from '@angular/router';
+import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
 
 @Component({
   selector: 'app-dashboard-cabs',
@@ -24,7 +25,7 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     TableModule, TagModule, RatingModule, ButtonModule, CommonModule, ProgressSpinnerModule, DialogModule,
     ConfirmDialogModule, FileUploadModule,
-    ToastModule, RouterModule],
+    ToastModule, RouterModule,GenerateInvoiceComponent],
   templateUrl: './dashboard-cabs.component.html',
   styleUrl: './dashboard-cabs.component.css',
   providers: [ConfirmationService, MessageService]

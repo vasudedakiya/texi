@@ -4,11 +4,12 @@ import { VehicleService } from '../../service/vehicle.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
 
 @Component({
   selector: 'app-dashboard-customers',
   standalone: true,
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule,CommonModule,GenerateInvoiceComponent],
   templateUrl: './dashboard-customers.component.html',
   styleUrl: './dashboard-customers.component.css'
 })

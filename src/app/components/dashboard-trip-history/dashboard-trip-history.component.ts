@@ -4,11 +4,13 @@ import { VehicleService } from '../../service/vehicle.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { UserDetails } from '../../vehicle.interface';
 import { CommonModule } from '@angular/common';
+import { DownloadJourneyDetailsComponent } from '../download-journey-details/download-journey-details.component';
+import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
 
 @Component({
   selector: 'app-dashboard-trip-history',
   standalone: true,
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule,CommonModule,DownloadJourneyDetailsComponent,GenerateInvoiceComponent],
   templateUrl: './dashboard-trip-history.component.html',
   styleUrl: './dashboard-trip-history.component.css'
 })
