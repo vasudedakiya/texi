@@ -49,7 +49,8 @@ export class DashboardLoginComponent implements OnInit {
         if (admin) {
           this._router.navigate(['config/trips']); // Redirect to dashboard
         } else {
-          this._router.navigate(['dashboard']); // Redirect to dashboard
+          this.loginForm.reset();
+          // this._router.navigate(['config/login']); // Redirect to dashboard
           this.errorMessage = 'Invalid User ID or Password';
         }
       },

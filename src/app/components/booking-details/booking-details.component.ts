@@ -11,6 +11,8 @@ import { MessageService } from 'primeng/api';
 import { FormsModule, NgForm } from '@angular/forms';
 import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
 import { emailJsPK, emailJsServiceId, emailJsTemplateId } from '../../firebase.config';
+import jsPDF from 'jspdf';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-booking-details',
@@ -23,6 +25,7 @@ import { emailJsPK, emailJsServiceId, emailJsTemplateId } from '../../firebase.c
 export class BookingDetailsComponent implements OnInit {
   @ViewChild('bookingModalOpenButton', { static: false }) bookingModalOpenButton!: ElementRef;
   @ViewChild('bookingModal', { static: false }) bookingModal!: ElementRef;
+  @ViewChild('invoice', { static: false }) invoiceElement!: ElementRef;
   fromLatLng: { lat: number, lon: number } | undefined;
   toLatLng: { lat: number, lon: number } | undefined;
 
@@ -147,9 +150,17 @@ export class BookingDetailsComponent implements OnInit {
             Rate: this.userDetails.Rate,
           };
 
-         
 
-          emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams,{publicKey:emailJsPK})
+          $('#bookingModal').hide();
+
+          // Redirect to the dashboard
+          this._router.navigate(['/dashboard']).then(() => {
+            // Trigger download after navigation
+            this.onDownload();
+          });
+
+
+          emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams, { publicKey: emailJsPK })
             .then(
               (response) => {
                 console.log('SUCCESS!', response);
@@ -159,8 +170,8 @@ export class BookingDetailsComponent implements OnInit {
               }
             );
 
-          this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
-          document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
+          // this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
+          // document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
         },
         error: (err) => {
           this.isCreateLoading = false;
@@ -214,4 +225,27 @@ export class BookingDetailsComponent implements OnInit {
     this.bookingModalOpenButton.nativeElement.click();
     this.findDistance();
   }
+
+  onDownload() {
+    const doc = new jsPDF('l', 'pt', 'a4');
+    const content = this.invoiceElement.nativeElement;
+
+    doc.html(content, {
+      callback: (doc) => {
+        // Convert the PDF to a Blob
+        const pdfBlob = doc.output('blob');
+        // Create a URL for the Blob
+        const blobUrl = URL.createObjectURL(pdfBlob);
+        // Open the PDF in a new window or tab
+        window.open(blobUrl, '_blank');
+        location.reload();
+      },
+      x: 60,
+      y: 1,
+      html2canvas: {
+        scale: 0.9,
+      },
+    });
+  }
+
 }
