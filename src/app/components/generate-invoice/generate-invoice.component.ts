@@ -54,23 +54,39 @@ export class GenerateInvoiceComponent {
     Date: new FormControl(null, Validators.required)
   });
 
-  constructor(
-  ) { }
+  constructor(private _vehicleService: VehicleService) { }
 
   async onSubmitTrip() {
     debugger;
-    // Ensure the download component is initialized
-    if (this.downloadJourneyDetailsComponent) {
-      // Set the download data
-      this.downloadJourneyDetailsComponent.downloadData = this.tripInformation.value;
+    let billNo = 0;
 
-      setTimeout(() => {
-        this.downloadJourneyDetailsComponent.onDownload();
-        this.visibleTrip = false;
-      });
-    } else {
-      console.error('DownloadJourneyDetailsComponent is not initialized');
-    }
+    this._vehicleService.getHighestDGBillNo().subscribe({
+      next: (highestBillNo) => {
+        billNo = highestBillNo + 1;
+        if (this.downloadJourneyDetailsComponent) {
+          // Set the download data
+          this.downloadJourneyDetailsComponent.downloadData = this.tripInformation.value;
+
+          this.downloadJourneyDetailsComponent.downloadData.Rate = this.tripInformation.value.Rate + (this.tripInformation.value.Rate * 0.07);
+          this.downloadJourneyDetailsComponent.downloadData.BillNo = billNo;
+          this._vehicleService.addDGInvoice(this.downloadJourneyDetailsComponent.downloadData).subscribe({
+            next: (res) => {
+              setTimeout(() => {
+                this.downloadJourneyDetailsComponent.onDownload();
+                this.visibleTrip = false;
+              });
+            }
+          })
+
+
+        } else {
+          console.error('DownloadJourneyDetailsComponent is not initialized');
+        }
+      },
+    });
+
+    // Ensure the download component is initialized
+
   }
 
   closeTripModal() {

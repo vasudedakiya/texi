@@ -21,13 +21,19 @@ export class SharedDataService {
   }
 
   saveData() {
-    sessionStorage.setItem('sharedData', JSON.stringify(this));
+    const dataToSave = {
+      ...this,
+      DateTime: new Date(this.DateTime).toISOString() // Ensure DateTime is a Date object before converting
+    };
+    sessionStorage.setItem('sharedData', JSON.stringify(dataToSave));
   }
 
   loadData() {
     const data = sessionStorage.getItem('sharedData');
     if (data) {
-      Object.assign(this, JSON.parse(data));
+      const parsedData = JSON.parse(data);
+      this.DateTime = new Date(parsedData.DateTime); // Convert ISO string back to Date object
+      Object.assign(this, parsedData);
     }
   }
 }

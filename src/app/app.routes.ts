@@ -12,6 +12,8 @@ import { DashboardCustomersComponent } from './components/dashboard-customers/da
 import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';
 import { AuthGuard } from './auth.guard';
 import { DashboardLoginComponent } from './components/dashboard-login/dashboard-login.component';
+import { GenerateInvoiceComponent } from './components/generate-invoice/generate-invoice.component';
+import { DashboardGeneratedInvoiceComponent } from './components/dashboard-generated-invoice/dashboard-generated-invoice.component';
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
@@ -49,6 +51,11 @@ export const routes: Routes = [
     {
         path: 'config/admin',
         component: DashboardAdminComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'config/generated',
+        component: DashboardGeneratedInvoiceComponent,
         canActivate: [AuthGuard]
     },
 ];
