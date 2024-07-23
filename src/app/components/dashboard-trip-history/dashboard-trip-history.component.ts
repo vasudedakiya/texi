@@ -16,7 +16,7 @@ import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.c
 })
 export class DashboardTripHistoryComponent implements OnInit {
   isLoading = false;
-  trips: UserDetails[] = []
+  trips: any[] = []
 
   constructor(private _vehicleService: VehicleService) { }
 

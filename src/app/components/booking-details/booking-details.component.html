@@ -124,11 +124,12 @@
             </div>
             <div class="col-md-4 cal-sm-12 bg-light p-4 d-flex align-items-center">
               <div class="card card-body w-100 h-auto">
-                <h2 class="h5 fw-bold mb-4 text-center">Total Payable</h2>
+                <h2 class="h5 fw-bold mb-4 text-center">Total Payable <p class="text-xs">Include GST</p></h2>
+                {{basePrice | number: '1.0-2'}} + {{gst | number:'1.0-2'}}
                 <p class="display-6 fw-bold mb-4 text-center">
                   <span class="price-text">
                     <ng-container *ngIf="priceText !== null; else calculating">
-                      ₹{{ priceText | number: '1.0-0' }}
+                      ₹{{ priceText | number: '1.0-2' }}
                     </ng-container>
                     <ng-template #calculating>calculating...</ng-template>
                   </span>
@@ -197,11 +198,11 @@
             </div>
             <div class="detail" style="margin-bottom: 15px;">
               <strong style="color: #555;">Date:</strong>
-              <p style="margin: 0; color: #333;">{{userDetails.Date | date:'medium'}}</p>
+              <p style="margin: 0; color: #333;">{{userDetails.Date | date: 'short'}}</p>
             </div>
             <div class="detail" style="margin-bottom: 15px;">
               <strong style="color: #555;">Amount:</strong>
-              <p style="margin: 0; color: #333; font-family: Arial, sans-serif;">{{userDetails.Rate | number:'1.0-0'}}</p>
+              <p style="margin: 0; color: #333; font-family: Arial, sans-serif;">{{userDetails.Rate | number: '1.0-0'}}</p>
             </div>
           </div>
         </div>

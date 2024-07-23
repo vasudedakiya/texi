@@ -11,7 +11,7 @@ import { UserDetails } from '../../vehicle.interface';
   styleUrls: ['./download-journey-details.component.css']
 })
 export class DownloadJourneyDetailsComponent {
-  @Input() downloadData!: UserDetails; 
+  @Input() downloadData!: any; 
   @ViewChild('invoice') invoiceElement!: ElementRef;
   
   onDownload() {

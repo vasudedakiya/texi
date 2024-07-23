@@ -6,11 +6,10 @@
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" routerLink="/dashboard">
                 <img src="assets/images/logo.svg" class="navbar-brand-img h-100" alt="main_logo">
-                 
             </a>
         </div>
         <hr class="horizontal dark mt-0">
-        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+        <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/config/trips">
@@ -97,7 +96,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" routerLink="/config/cabs">
+                    <a class="nav-link" routerLink="/config/cabs">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 40 40" version="1.1"
@@ -190,7 +189,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/config/generated">
+                    <a class="nav-link active" routerLink="/config/generated">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1"
@@ -228,15 +227,11 @@
             navbar-scroll="true">
             <div class="container-fluid py-1 px-3">
                 <nav aria-label="breadcrumb">
-                    <h6 class="font-weight-bolder mb-0">Cabs</h6>
+                    <h6 class="font-weight-bolder mb-0">Direct Generated Trips</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-
                         <app-generate-invoice></app-generate-invoice>
-
-                        <p-button class="m-2 btn-sm" icon="pi pi-plus" [text]="true" [raised]="true" severity="info"
-                            label="Add" (click)="visible = true" />
 
                         <button (click)="signOut()" class="btn btn-warning d-flex align-items-center mt-2">
                             <i class="fa fa-user me-sm-1"></i>
@@ -246,81 +241,80 @@
                 </div>
             </div>
         </nav>
-        <div class="card flex justify-content-center align-items-center" *ngIf="isLoading">
-            <p-progressSpinner ariaLabel="loading" />
-        </div>
-        <div class="container-fluid py-4" *ngIf="!isLoading">
+        <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Cabs List</h6>
+                            <h6>Generated Trips</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
-                                <p-toast />
-                                <p-confirmDialog />
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-secondary text-xxs font-weight-bolder opacity-7">
+                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Bill No</th>
+                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
+                                                From / To</th>
+                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Vehicle</th>
-                                            <th class="text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                            <th
+                                                class="text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                Date / Time</th>
+                                            <th
+                                                class="text-center text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Name</th>
+                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Mobile No.</th>
+                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Price</th>
-                                            <th
-                                                class="text-center text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Passengers/Luggage
-                                            </th>
-                                            <th
-                                                class="text-center text-secondary text-xxs font-weight-bolder opacity-7">
-                                                AirCondition
-                                            </th>
-                                            <th
-                                                class="text-center text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Action</th>
-                                            <th class="text-secondary opacity-7"></th>
+                                            <th class="text-start text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Download</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let product of vehicals">
+                                        <tr *ngFor="let trip of trips; index as i">
+                                            <td>
+                                                <span class="badge badge-sm text-black ">{{trip.BillNo}}</span>
+                                            </td>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    <div>
-                                                        <img src="{{product.ImageUrl}}" class="avatar avatar-sm me-3"
-                                                            alt="user1">
-                                                    </div>
                                                     <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">{{product.VehicleName}}</h6>
-                                                        <p class="text-xs text-secondary mb-0">{{product.Desc}}</p>
+                                                        <p class="text-xs font-weight-bold mb-0">{{trip.From}}</p>
+                                                        <p class="text-xs font-weight-bold mb-0">{{trip.To}}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-                                                <p class="text-xs text-secondary mb-0">{{product.Price}}</p>
+                                                <span
+                                                    class="badge badge-sm bg-gradient-secondary ">{{trip.Vehicle}}</span>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">{{product.Passengers}}
-                                                    / {{product.Luggage ? product.Luggage : '-'}}</span>
+                                                <h6 class="mb-0 text-sm">{{trip.Date | date : 'dd/MM/yyyy'}}</h6>
+                                                <p class="text-xs text-secondary mb-0">{{trip.Date | date : 'hh:mm a'}}
+                                                </p>
+                                                <span class="text-secondary text-xs font-weight-bold"></span>
                                             </td>
                                             <td class="align-middle text-center">
-                                                <span
-                                                    class="text-secondary text-xs font-weight-bold">{{product.AirCondition}}</span>
+                                                <h6 class="mb-0 text-sm">{{trip.Name}}</h6>
+                                                <p class="text-xs text-secondary mb-0">{{trip.Email}}</p>
                                             </td>
                                             <td class="align-middle">
-                                                <p-button class="btn-sm" (click)="deleteVehicle(product.id)"
-                                                    icon="pi pi-trash" size="small" severity="danger"
-                                                    [outlined]="true" />
-                                                <p-button class="btn-sm" (click)="editVehicle(product)"
-                                                    icon="pi pi-pencil" size="small" severity="info"
-                                                    [outlined]="true" />
+                                                <span
+                                                    class="text-secondary text-xs font-weight-bold">{{trip.MoNumber}}</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-sm bg-gradient-success">{{trip.Rate | number:
+                                                    '1.0-0' }}</span>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge badge-sm bg-gradient-primary p-0"><app-download-journey-details
+                                                        [downloadData]="trip"></app-download-journey-details></span>
                                             </td>
                                         </tr>
                                     </tbody>
-                                    <ng-template pTemplate="summary">
-                                        <div class="flex align-items-center justify-content-between">
-                                            In total there are {{vehicals ? vehicals.length : 0 }} vehicals.
-                                        </div>
-                                    </ng-template>
                                 </table>
                             </div>
                         </div>
@@ -348,82 +342,3 @@
         </div>
     </footer>
 </main>
-
-
-<p-dialog header="Add Vehicle" [modal]="true" [(visible)]="visible" [style]="{ width: '50rem' }"
-    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true" (onHide)="closeVehicleModal()">
-    <form [formGroup]="vehicleInformation">
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="Title" class="font-semibold w-6rem required">Title</label>
-            <input pInputText type="text" formControlName="VehicleName" class="flex-auto" autocomplete="off" />
-        </div>
-
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="Description" class="font-semibold w-6rem required">Description</label>
-            <textarea type="text" pInputText formControlName="Desc" cols="4" class="flex-auto"
-                autocomplete="off"></textarea>
-        </div>
-
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="Rate" class="font-semibold w-6rem required">Rate</label>
-            <input pInputText type="number" formControlName="Price" [min]="0" class="flex-auto" autocomplete="off" />
-        </div>
-
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="Passengers" class="font-semibold w-6rem required">Passengers</label>
-            <input pInputText type="number" formControlName="Passengers" [min]="1" class="flex-auto"
-                autocomplete="off" />
-        </div>
-
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="Luggage" class="font-semibold w-6rem required">Luggage</label>
-            <input pInputText type="number" formControlName="Luggage" [min]="1" class="flex-auto" autocomplete="off" />
-        </div>
-
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="AirCondition" class="font-semibold w-6rem required">Air Condition</label>
-            <input type="radio" formControlName="AirCondition" name="AirCondition" value="Yes" class="" /> Yes
-            <input type="radio" formControlName="AirCondition" name="AirCondition" value="No" class="" /> No
-        </div>
-
-
-        <div class="flex align-items-center gap-3 mb-3">
-            <label for="Image" class="font-semibold w-6rem required">Image</label>
-            <div class="logoUploadContainer d-flex">
-                <div class="logoUploadInput" *ngIf="!logoBase64string">
-                    <input type="file" class="file-input" accept="image/*" formControlName="ImageUrl"
-                        (change)="handleFileInput($event)" #fileInput>
-                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                        width="32px" height="32px" viewBox="0,0,256,256">
-                        <g fill="#aaaaaa" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                            style="mix-blend-mode: normal">
-                            <g transform="scale(8,8)">
-                                <path
-                                    d="M15.98633,0.00195c-0.5254,0.00307 -1.02848,0.21286 -1.40039,0.58398l-8,8c-0.57187,0.57199 -0.74292,1.43212 -0.43341,2.17939c0.30951,0.74727 1.03864,1.23455 1.84747,1.23467c0.5307,0.00143 1.03991,-0.20956 1.41406,-0.58594l4.58594,-4.58594v16.17188c0,1.10457 0.89543,2 2,2c1.10457,0 2,-0.89543 2,-2v-16.17187l4.58594,4.58594c0.78097,0.78096 2.04716,0.78096 2.82812,0c0.78096,-0.78097 0.78096,-2.04716 0,-2.82812l-7.99805,-7.99609c-0.18528,-0.18747 -0.40649,-0.33561 -0.65039,-0.43555c-0.24697,-0.10238 -0.51196,-0.15418 -0.7793,-0.15234zM1.94141,21c-1.08162,0.0317 -1.94187,0.91791 -1.94141,2v5c0.00235,2.20816 1.79184,3.99765 4,4h24c2.20823,-0.0022 3.9978,-1.79177 4,-4v-5c-0.00143,-1.10398 -0.89602,-1.99857 -2,-2c-1.10398,0.00143 -1.99857,0.89602 -2,2v5h-24v-5c0.00023,-0.54074 -0.21851,-1.05854 -0.60635,-1.43534c-0.38784,-0.3768 -0.91173,-0.5805 -1.45225,-0.56466z">
-                                </path>
-                            </g>
-                        </g>
-                    </svg>
-                    <h4> <strong>Choose a file</strong> or drag it here</h4>
-                </div>
-                <div *ngIf="logoBase64string">
-                    <div class="logoPreview">
-                        <div class="logo-wrapper">
-                            <img [src]="logoBase64string" alt="logo" />
-                        </div>
-                    </div>
-                </div>
-                <p-button *ngIf="logoBase64string" class="m-2 btn-sm" severity="warning" size="small" label="Clear"
-                    (click)="cancleVehileLogo()" />
-            </div>
-        </div>
-
-    </form>
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (click)="closeVehicleModal()" />
-        <p-button label="Save" [disabled]="vehicleInformation.invalid" [loading]="isCreateLoading" (click)="onSubmit()"
-            type="submit" />
-    </div>
-</p-dialog>

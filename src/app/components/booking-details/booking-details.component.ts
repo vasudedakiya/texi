@@ -13,6 +13,7 @@ import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
 import { emailJsPK, emailJsServiceId, emailJsTemplateId } from '../../firebase.config';
 import jsPDF from 'jspdf';
 import $ from 'jquery';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-booking-details',
@@ -46,8 +47,10 @@ export class BookingDetailsComponent implements OnInit {
   priceText: number = 0;
   visible: boolean = false;
   textMessage: string = '';
+  basePrice: number = 0;
+  gst: number = 0;
 
-  userDetails: UserDetails = {
+  userDetails: any = {
     Name: '',
     Email: '',
     MoNumber: '',
@@ -56,7 +59,8 @@ export class BookingDetailsComponent implements OnInit {
     Distances: 0,
     Vehicle: '',
     Rate: 0,
-    Date: new Date()
+    Date: new Date(),
+    BillNo: 0
   }
   // distance: number | undefined;
 
@@ -119,56 +123,68 @@ export class BookingDetailsComponent implements OnInit {
     if (userForm.valid) {
 
       this.isCreateLoading = true;
+      let billNo = 0;
+      this._vehicleService.getHighestBillNo().subscribe({
+        next: (highestBillNo) => {
+          billNo = highestBillNo + 1;
 
-      this.userDetails = {
-        Name: this.userName,
-        Email: this.email,
-        MoNumber: this.mobileNo,
-        From: this.fromText?.toString(),
-        To: this.toText?.toString(),
-        Distances: this.userDetails.Distances,
-        Vehicle: this._sharedDataService.vehicle?.VehicleName,
-        Rate: Math.floor(Number(this.priceText)),
-        Date: this._sharedDataService.DateTime
-      }
-      this._sharedDataService.saveData();
+          this.userDetails = {
+            Name: this.userName,
+            Email: this.email,
+            MoNumber: this.mobileNo,
+            From: this.fromText?.toString(),
+            To: this.toText?.toString(),
+            Distances: this.userDetails.Distances,
+            Vehicle: this._sharedDataService.vehicle?.VehicleName,
+            Rate: Math.floor(Number(this.priceText)),
+            Date: new Date(this._sharedDataService.DateTime),
+            BillNo: billNo
+          }
+          this._sharedDataService.saveData();
 
-      this._vehicleService.addUserDetails(this.userDetails).subscribe({
-        next: (data) => {
-          this.isCreateLoading = false;
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
-          this.visible = false;
+          this._vehicleService.addUserDetails(this.userDetails).subscribe({
+            next: (data) => {
+              this.isCreateLoading = false;
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
+              this.visible = false;
 
-          const templateParams = {
-            Name: this.userDetails.Name,
-            Email: this.userDetails.Email,
-            MoNumber: this.userDetails.MoNumber,
-            From: this.userDetails.From,
-            To: this.userDetails.To,
-            Vehicle: this.userDetails.Vehicle,
-            Date: this.userDetails.Date,
-            Rate: this.userDetails.Rate,
-          };
+              const templateParams = {
+                Name: this.userDetails.Name,
+                Email: this.userDetails.Email,
+                MoNumber: this.userDetails.MoNumber,
+                From: this.userDetails.From,
+                To: this.userDetails.To,
+                Vehicle: this.userDetails.Vehicle,
+                Date: this.userDetails.Date,
+                Rate: this.userDetails.Rate,
+              };
 
 
-          $('#bookingModal').hide();
+              $('#bookingModal').hide();
 
-          // Redirect to the dashboard
-          this._router.navigate(['/dashboard']).then(() => {
-            // Trigger download after navigation
-            this.onDownload();
+              // Redirect to the dashboard
+              this._router.navigate(['/dashboard']).then(() => {
+                // Trigger download after navigation
+                this.onDownload();
+              });
+
+
+              emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams, { publicKey: emailJsPK })
+                .then(
+                  (response) => {
+                    console.log('SUCCESS!', response);
+                  },
+                  (error) => {
+                    console.log('FAILED...', error);
+                  }
+                );
+
+            },
+            error: (error) => {
+              console.error('Error fetching highest BillNo:', error);
+              // Handle the error case, e.g., set a default value or notify the user
+            }
           });
-
-
-          emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams, { publicKey: emailJsPK })
-            .then(
-              (response) => {
-                console.log('SUCCESS!', response);
-              },
-              (error) => {
-                console.log('FAILED...', error);
-              }
-            );
 
           // this.textMessage = `*Name* : ${this.userDetails.Name} \n*From* : ${this.userDetails.From} \n*To* : ${this.userDetails.To} \n*Price* : ${this.userDetails.Rate} \n*Vehicle* : ${this.userDetails.Vehicle} \n*Phone* : ${this.userDetails.MoNumber}`;
           // document.location.href = `https://wa.me/${this._sharedDataService.PhoneNo}?text=${encodeURIComponent(this.textMessage)}`;
@@ -186,7 +202,10 @@ export class BookingDetailsComponent implements OnInit {
       .subscribe({
         next: (res) => {
           this.userDetails.Distances = this.findMinimumDistance(res);
-          this.priceText = this.userDetails.Distances * Number(this._sharedDataService.vehicle?.Price);
+          this.basePrice = this.userDetails.Distances * Number(this._sharedDataService.vehicle?.Price);
+          this.gst = this.basePrice * 0.07; // Calculate 7% GST
+          this.priceText = this.basePrice + this.gst;
+          //this.priceText = this.userDetails.Distances * Number(this._sharedDataService.vehicle?.Price);
         },
         error: (err) => {
           console.error('Error finding distance:', err);

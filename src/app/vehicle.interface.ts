@@ -1,3 +1,5 @@
+import { Timestamp } from "@angular/fire/firestore"
+
 export interface Vehicles {
     id: string
     ImageUrl: string,
@@ -18,7 +20,8 @@ export interface UserDetails {
     Distances: number,
     Vehicle: string | undefined,
     Rate: number,
-    Date: Date
+    Date: Date | Timestamp,
+    BillNo: number 
 }
 
 export interface AdminModel {

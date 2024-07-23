@@ -121,7 +121,7 @@ export class DashboardComponent implements OnInit {
     this._sharedDataService.DateTime = combinedDateTime;
     this._sharedDataService.saveData();
   }
-
+  
   orderTaxiNow() {
     if (this.fromLatLng && this.toLatLng) {
       this.combineDateTime();
