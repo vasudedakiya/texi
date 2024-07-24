@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CarouselComponent } from '../carousel/carousel.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationIqService } from '../../service/location-iq.service';
@@ -23,12 +23,18 @@ import { Timestamp } from '@angular/fire/firestore';
   styleUrl: './booking-details.component.css',
   providers: [MessageService]
 })
-export class BookingDetailsComponent implements OnInit {
+export class BookingDetailsComponent implements OnInit,AfterViewInit  {
   @ViewChild('bookingModalOpenButton', { static: false }) bookingModalOpenButton!: ElementRef;
   @ViewChild('bookingModal', { static: false }) bookingModal!: ElementRef;
+  @ViewChild('closeBookingModal', { static: false }) closeBookingModal!: ElementRef;
   @ViewChild('invoice', { static: false }) invoiceElement!: ElementRef;
+  @ViewChild('pdfModal') pdfModal!: ElementRef;
+  @ViewChild('pdfFrame') pdfFrame!: ElementRef;
+  @ViewChild('openModalBtn') openModalBtn!: ElementRef;
+  @ViewChild('closedownloadModalBtn') closedownloadModalBtn!: ElementRef;
   fromLatLng: { lat: number, lon: number } | undefined;
   toLatLng: { lat: number, lon: number } | undefined;
+
 
   constructor(private route: ActivatedRoute,
     private _locationIqService: LocationIqService,
@@ -49,7 +55,18 @@ export class BookingDetailsComponent implements OnInit {
   textMessage: string = '';
   basePrice: number = 0;
   gst: number = 0;
+  pdfBlob: Blob = new Blob();
+  @ViewChild('closeModalBtn') closeModalBtn!: ElementRef;
 
+
+  ngAfterViewInit() {
+    // Add event listener to the close button
+    if (this.closedownloadModalBtn) {
+      this.closedownloadModalBtn.nativeElement.addEventListener('click', () => {
+        this._router.navigate(['/dashboard']);
+      });
+    }
+  } 
   userDetails: any = {
     Name: '',
     Email: '',
@@ -114,9 +131,6 @@ export class BookingDetailsComponent implements OnInit {
         this.toText = this._sharedDataService.toText
       }
     }
-    else {
-      console.error('fromLatLng or toLatLng is undefined');
-    }
   }
 
   onSubmit(userForm: NgForm) {
@@ -160,29 +174,19 @@ export class BookingDetailsComponent implements OnInit {
               };
 
 
-              $('#bookingModal').hide();
+              // $('#bookingModal').hide();
+              this.closeBookingModal.nativeElement.click();
 
-              // Redirect to the dashboard
-              this._router.navigate(['/dashboard']).then(() => {
-                // Trigger download after navigation
-                this.onDownload();
-              });
+              // this._router.navigate(['/dashboard']).then(() => {
+              // Trigger download after navigation
+              this.onDownload();
+              // });
+
 
 
               emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams, { publicKey: emailJsPK })
-                .then(
-                  (response) => {
-                    console.log('SUCCESS!', response);
-                  },
-                  (error) => {
-                    console.log('FAILED...', error);
-                  }
-                );
+                .then();
 
-            },
-            error: (error) => {
-              console.error('Error fetching highest BillNo:', error);
-              // Handle the error case, e.g., set a default value or notify the user
             }
           });
 
@@ -206,9 +210,6 @@ export class BookingDetailsComponent implements OnInit {
           this.gst = this.basePrice * 0.07; // Calculate 7% GST
           this.priceText = this.basePrice + this.gst;
           //this.priceText = this.userDetails.Distances * Number(this._sharedDataService.vehicle?.Price);
-        },
-        error: (err) => {
-          console.error('Error finding distance:', err);
         }
       });
   }
@@ -252,12 +253,30 @@ export class BookingDetailsComponent implements OnInit {
     doc.html(content, {
       callback: (doc) => {
         // Convert the PDF to a Blob
-        const pdfBlob = doc.output('blob');
+        this.pdfBlob = doc.output('blob');
         // Create a URL for the Blob
-        const blobUrl = URL.createObjectURL(pdfBlob);
-        // Open the PDF in a new window or tab
-        window.open(blobUrl, '_blank');
-        location.reload();
+        const contentHtml = this.invoiceElement.nativeElement.innerHTML;
+
+        // Create a full HTML document to display inside the iframe
+        const iframeContent = `
+      <html>
+      <head>
+        <style>
+          body { margin: 0; padding: 20px; background-color: #f9f9f9; }
+        </style>
+      </head>
+      <body>
+        ${contentHtml}
+      </body>
+      </html>
+    `;
+
+        // Set the content of the iframe
+        const iframe = this.pdfFrame.nativeElement;
+        iframe.srcdoc = iframeContent;
+
+        // Programmatically click the hidden button to open the modal
+        this.openModalBtn.nativeElement.click();
       },
       x: 60,
       y: 1,
@@ -267,4 +286,17 @@ export class BookingDetailsComponent implements OnInit {
     });
   }
 
+  downloadPdf() {
+    if (this.pdfBlob) {
+      const link = document.createElement('a');
+      const blobUrl = URL.createObjectURL(this.pdfBlob);
+      link.href = blobUrl;
+      link.download = 'invoice.pdf';
+      link.click();
+
+     this._router.navigate(['/dashboard']).then(() => {
+              location.reload();
+      });
+    }
+  }
 }

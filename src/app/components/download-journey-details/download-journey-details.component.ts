@@ -13,6 +13,16 @@ import { UserDetails } from '../../vehicle.interface';
 export class DownloadJourneyDetailsComponent {
   @Input() downloadData!: any; 
   @ViewChild('invoice') invoiceElement!: ElementRef;
+
+  formatBillNo(billNo: number): string {
+    if (billNo < 1000) {
+      // Zero-pad numbers less than 1000
+      return billNo.toString().padStart(3, '0');
+    } else {
+      // Remove thousand separators for numbers 1000 and above
+      return billNo.toString().replace(/,/g, '');
+    }
+  }
   
   onDownload() {
     const doc = new jsPDF('l', 'pt', 'a4');
