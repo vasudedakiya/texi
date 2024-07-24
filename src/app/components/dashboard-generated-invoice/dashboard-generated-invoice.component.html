@@ -276,7 +276,7 @@
                                     <tbody>
                                         <tr *ngFor="let trip of trips; index as i">
                                             <td>
-                                                <span class="badge badge-sm text-black ">{{trip.BillNo}}</span>
+                                                <span class="badge badge-sm text-black ">{{trip.BillNo | number:'3.0-0'}}</span>
                                             </td>
                                             <td>
                                                 <div class="d-flex px-2 py-1">

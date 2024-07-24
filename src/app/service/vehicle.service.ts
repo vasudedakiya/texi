@@ -159,9 +159,16 @@ export class VehicleService {
   }
 
   getAllDGInvoice(): Observable<UserDetails[]> {
-    return collectionData(this.DGInvoiceCollection, {
-      idField: 'id'
-    }) as Observable<UserDetails[]>;
+    const tripsQuery = query(this.DGInvoiceCollection, orderBy('BillNo', 'desc'));
+
+    return from(getDocs(tripsQuery)).pipe(
+      map(snapshot => {
+        return snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        } as unknown as UserDetails));
+      })
+    );
   }
 
   addDGInvoice(userDetails: UserDetails): Observable<string> {
