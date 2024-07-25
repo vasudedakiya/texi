@@ -1,5 +1,8 @@
-<p-button class="m-2 btn-sm" icon="pi pi-plus" [text]="true" [raised]="true" severity="info" label="Generate Invoice"
+<p-button class="m-2 btn-sm d-sm-inline d-none" icon="pi pi-plus" [text]="true"  [raised]="true" severity="warning" label="Generate Invoice"
     (click)="visibleTrip = true" />
+
+<p-button class="m-2 btn-sm d-sm-none d-inline" icon="pi pi-plus" severity="warning" [text]="true"  [raised]="true"  size="small" (click)="visibleTrip = true" />
+
 
 <p-dialog header="Add Trip" [modal]="true" [(visible)]="visibleTrip" [style]="{ width: '70rem' }"
     [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [maximizable]="true" (onHide)="closeTripModal()">
@@ -42,7 +45,7 @@
         <div class="flex align-items-center gap-3 mb-3">
             <label for="Date" class="font-semibold w-6rem required">Date</label>
             <p-calendar [showIcon]="true" formControlName="Date" [dateFormat]="'dd/mm/yy'" [showTime]="true"
-                [hourFormat]="'12'" [touchUI]="true" ></p-calendar>
+                [hourFormat]="'12'" [touchUI]="true"></p-calendar>
 
         </div>
 
