@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { VehicleService } from '../../service/vehicle.service';
 import { UserDetails } from '../../vehicle.interface';
@@ -12,7 +12,7 @@ import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.c
 @Component({
   selector: 'app-dashboard-trips',
   standalone: true,
-  imports:[DownloadJourneyDetailsComponent,CommonModule,GenerateInvoiceComponent,RouterModule],
+  imports: [DownloadJourneyDetailsComponent, CommonModule, GenerateInvoiceComponent, RouterModule],
   templateUrl: './dashboard-trips.component.html',
   styleUrl: './dashboard-trips.component.css',
   providers: [ConfirmationService, MessageService]
@@ -21,13 +21,15 @@ export class DashboardTripsComponent implements OnInit {
   isLoading = false;
   isTripLoading = false;
   visibleTrip = false;
-  trips: any[] = []
+  trips: any[] = [];
+  isSidebarVisible: boolean = false;
 
   constructor(private _vehicleService: VehicleService,
   ) { }
 
   ngOnInit(): void {
-    this.fatchTrips()
+    this.fatchTrips();
+    this.checkWindowSize();
   }
 
   fatchTrips() {
@@ -48,6 +50,20 @@ export class DashboardTripsComponent implements OnInit {
 
   signOut() {
     this._vehicleService.signOut();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+      this.checkWindowSize();
+  }
+
+  checkWindowSize() {
+      const windowWidth = window.innerWidth;
+      this.isSidebarVisible = windowWidth > 1199;
+  }
+
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
   }
 
 }

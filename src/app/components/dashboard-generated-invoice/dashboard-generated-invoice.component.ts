@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { VehicleService } from '../../service/vehicle.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { DownloadJourneyDetailsComponent } from '../download-journey-details/download-journey-details.component';
@@ -17,13 +17,15 @@ export class DashboardGeneratedInvoiceComponent implements OnInit {
   isLoading = false;
   isTripLoading = false;
   visibleTrip = false;
-  trips: any[] = []
+  trips: any[] = [];
+  isSidebarVisible: boolean = false;
 
   constructor(private _vehicleService: VehicleService,
   ) { }
 
   ngOnInit(): void {
-    this.fatchTrips()
+    this.fatchTrips();
+    this.checkWindowSize();
   }
 
   fatchTrips() {
@@ -45,5 +47,20 @@ export class DashboardGeneratedInvoiceComponent implements OnInit {
   signOut() {
     this._vehicleService.signOut();
   }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+      this.checkWindowSize();
+  }
+
+  checkWindowSize() {
+      const windowWidth = window.innerWidth;
+      this.isSidebarVisible = windowWidth > 1199;
+  }
+
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
+  }
+
 
 }
