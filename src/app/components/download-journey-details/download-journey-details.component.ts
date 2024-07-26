@@ -13,8 +13,10 @@ import { UserDetails } from '../../vehicle.interface';
 export class DownloadJourneyDetailsComponent {
   @Input() downloadData!: any; 
   @ViewChild('invoice') invoiceElement!: ElementRef;
+  billNo : number = 0;
 
   formatBillNo(billNo: number): string {
+    this.billNo = billNo;
     if (billNo < 1000) {
       // Zero-pad numbers less than 1000
       return billNo.toString().padStart(3, '0');
@@ -31,7 +33,7 @@ export class DownloadJourneyDetailsComponent {
     doc.html(content, {
       callback: (doc) => {
         doc.setLineWidth(100)
-        doc.save('Invoice.pdf');
+        doc.save(`${this.billNo}_Invoice.pdf`);
       },
       x: 60,
       y: 1,

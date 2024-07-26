@@ -27,8 +27,6 @@
   transform: translateY(-10px);
 }
 
-
-
 .info-content {
   width: 100%;
 }
@@ -329,10 +327,13 @@
   border-color: #805ad5;
 }
 
-.modal-dialog {
-  max-width: 80%;
-  /* Adjust max-width as per your design */
+@media screen and (min-width:576px) {
+  .modal-dialog {
+    max-width: 80%;
+    /* Adjust max-width as per your design */
+  }
 }
+
 
 /* .modal-body {
   padding: 2rem;

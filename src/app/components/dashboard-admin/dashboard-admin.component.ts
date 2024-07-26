@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AdminModel } from '../../vehicle.interface'; // Assuming AdminModel exists
 import { VehicleService } from '../../service/vehicle.service';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,8 @@ export class DashboardAdminComponent implements OnInit {
   admins: AdminModel[] = [];
   passwordVisibility: { [key: string]: boolean } = {};
   isEditing = false;
-  mobileNumberObj = { PhoneNo: '', id: '' }; // Object to track password visibility
+  mobileNumberObj = { PhoneNo: '', id: '' }; 
+  isSidebarVisible: boolean = false;
 
   constructor(private _vehicleService: VehicleService, private _sharedDataService: SharedDataService) { }
 
@@ -28,6 +29,7 @@ export class DashboardAdminComponent implements OnInit {
     this._vehicleService.getPhoneNumber().subscribe((res: any) => {
       this.mobileNumberObj = res[0];
     })
+    this.checkWindowSize();
   }
 
   fetchAdmins(): void {
@@ -69,5 +71,19 @@ export class DashboardAdminComponent implements OnInit {
       debugger;
       this._vehicleService.updatePhoneNumber(this.mobileNumberObj.PhoneNo, this.mobileNumberObj.id).subscribe();
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+      this.checkWindowSize();
+  }
+
+  checkWindowSize() {
+      const windowWidth = window.innerWidth;
+      this.isSidebarVisible = windowWidth > 1199;
+  }
+
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
   }
 }

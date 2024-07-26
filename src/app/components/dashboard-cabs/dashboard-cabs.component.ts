@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -52,6 +52,7 @@ export class DashboardCabsComponent implements OnInit {
   editMode: boolean = false;
   currentVehicleId: string = "";
   oldImage: string = "";
+  isSidebarVisible: boolean = false;
 
   constructor(private _vehicleService: VehicleService,
     private _storage: Storage,
@@ -63,6 +64,7 @@ export class DashboardCabsComponent implements OnInit {
     // this.vehicals = this.commonService.customCarouselCards;
     this.fetchVehicals()
     this.updateImageUrlValidator();
+    this.checkWindowSize();
   }
 
   fetchVehicals() {
@@ -231,5 +233,19 @@ export class DashboardCabsComponent implements OnInit {
       imageUrlControl?.setValidators([Validators.required]);
     }
     imageUrlControl?.updateValueAndValidity();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+      this.checkWindowSize();
+  }
+
+  checkWindowSize() {
+      const windowWidth = window.innerWidth;
+      this.isSidebarVisible = windowWidth > 1199;
+  }
+
+  toggleSidebar() {
+    this.isSidebarVisible = !this.isSidebarVisible;
   }
 }

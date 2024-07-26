@@ -26673,10 +26673,48 @@
   }
 
   .footer {
-    /* background-color: yellow !important; */
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    background-color: #fde080; /* Optional: Set your desired background color */
-    padding: 10px 0; /* Adjust padding as needed */
+  /* background-color: yellow !important; */
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background-color: #fde080; /* Optional: Set your desired background color */
+  padding: 10px 0; /* Adjust padding as needed */
+}
+
+/* Add this CSS to your global styles.css or styles.scss */
+
+#sidenav-main {
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidenav-hidden {
+  transform: translateX(-110%) !important;
+}
+
+@media (max-width: 1199px) {
+  #sidenav-main {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      transform: translateX(0%);
+      z-index: 9999;
+      background-color: white;
   }
+
+  .sidenav-visible {
+      transform: translateX(0);
+  }
+
+  .sidenav-backdrop {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9998;
+  }
+}

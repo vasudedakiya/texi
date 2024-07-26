@@ -171,6 +171,7 @@ export class BookingDetailsComponent implements OnInit,AfterViewInit  {
                 Vehicle: this.userDetails.Vehicle,
                 Date: this.userDetails.Date,
                 Rate: this.userDetails.Rate,
+                BillNo: billNo
               };
 
 
@@ -291,7 +292,7 @@ export class BookingDetailsComponent implements OnInit,AfterViewInit  {
       const link = document.createElement('a');
       const blobUrl = URL.createObjectURL(this.pdfBlob);
       link.href = blobUrl;
-      link.download = 'invoice.pdf';
+      link.download = `${this.userDetails.BillNo}_Invoice.pdf`;
       link.click();
 
      this._router.navigate(['/dashboard']).then(() => {
