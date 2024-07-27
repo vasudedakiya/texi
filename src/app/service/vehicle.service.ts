@@ -147,12 +147,14 @@ export class VehicleService {
             ...doc.data()
           } as unknown as UserDetails;
 
-          // Check if the email is already in the Set
+          // Check if the number is already in the Set
           if (!uniqueMobiles.has(customer.MoNumber)) {
             uniqueMobiles.add(customer.MoNumber);
             uniqueCustomers.push(customer);
           }
         });
+
+        uniqueCustomers.sort((a, b) => b.BillNo - a.BillNo);
         return uniqueCustomers;
       })
     );

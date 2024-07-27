@@ -26718,3 +26718,10 @@
       z-index: 9998;
   }
 }
+
+main {
+  background-color: #f8f9fa !important;
+  height: 100vh;
+  overflow: auto;
+  padding-bottom: 15px; /* Adjust based on footer height */
+}
