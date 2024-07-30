@@ -5,11 +5,12 @@ import { Timestamp } from '@angular/fire/firestore';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-dashboard-customers',
   standalone: true,
-  imports: [RouterModule,CommonModule,GenerateInvoiceComponent],
+  imports: [RouterModule,CommonModule,GenerateInvoiceComponent,NgxPaginationModule],
   templateUrl: './dashboard-customers.component.html',
   styleUrl: './dashboard-customers.component.css'
 })
@@ -17,6 +18,7 @@ export class DashboardCustomersComponent implements OnInit {
   isLoading = false;
   users: UserDetails[] = []
   isSidebarVisible: boolean = false;
+  p: number = 1;
 
   constructor(private _vehicleService: VehicleService) { }
 

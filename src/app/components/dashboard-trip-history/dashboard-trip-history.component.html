@@ -280,7 +280,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let trip of trips; index as i">
+                                        <tr *ngFor="let trip of trips | paginate: { itemsPerPage: 10, currentPage: p } ; index as i">
                                             <td>
                                                 <span class="badge badge-sm text-black ">{{i+1}}</span>
                                             </td>
@@ -325,6 +325,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <pagination-controls (pageChange)="p = $event" class="my-pagination d-flex justify-content-end pt-3 pe-3"></pagination-controls>
                             </div>
                         </div>
                     </div>

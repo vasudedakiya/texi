@@ -6,11 +6,12 @@ import { UserDetails } from '../../vehicle.interface';
 import { CommonModule } from '@angular/common';
 import { DownloadJourneyDetailsComponent } from '../download-journey-details/download-journey-details.component';
 import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-dashboard-trip-history',
   standalone: true,
-  imports: [RouterModule,CommonModule,DownloadJourneyDetailsComponent,GenerateInvoiceComponent],
+  imports: [RouterModule,CommonModule,DownloadJourneyDetailsComponent,GenerateInvoiceComponent,NgxPaginationModule],
   templateUrl: './dashboard-trip-history.component.html',
   styleUrl: './dashboard-trip-history.component.css'
 })
@@ -18,6 +19,7 @@ export class DashboardTripHistoryComponent implements OnInit {
   isLoading = false;
   trips: any[] = [];
   isSidebarVisible: boolean = false;
+  p: number = 1;
 
   constructor(private _vehicleService: VehicleService) { }
 
