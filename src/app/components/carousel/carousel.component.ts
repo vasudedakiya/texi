@@ -53,7 +53,12 @@ export class CarouselComponent implements OnInit {
     });
     // this.products = this.commonService.customCarouselCards;
     this.vehicleService.getVehicles().subscribe(vehicles => {
-      this.products = vehicles;
+      if(this.isBookingDetailsRoute){
+        this.products = vehicles.filter(vehicle => vehicle.Passengers >= this._sharedData.passengersCount! && vehicle.Luggage >= this._sharedData.luggageCount!);
+      }
+      else{
+        this.products = vehicles;
+      }
       this.updateVehicleImages();
     })
   }

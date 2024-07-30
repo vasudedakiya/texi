@@ -6,11 +6,12 @@ import { UserDetails } from '../../vehicle.interface';
 import { Timestamp } from '@angular/fire/firestore';
 import { DownloadJourneyDetailsComponent } from '../download-journey-details/download-journey-details.component';
 import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-dashboard-upcoming-trips',
   standalone: true,
-  imports: [RouterModule,CommonModule,DownloadJourneyDetailsComponent,GenerateInvoiceComponent],
+  imports: [RouterModule,CommonModule,DownloadJourneyDetailsComponent,GenerateInvoiceComponent,NgxPaginationModule],
   templateUrl: './dashboard-upcoming-trips.component.html',
   styleUrl: './dashboard-upcoming-trips.component.css'
 })
@@ -19,6 +20,7 @@ export class DashboardUpcomingTripsComponent implements OnInit{
   isLoading = false;
   trips: any[] = [];
   isSidebarVisible: boolean = false;
+  p: number = 1;
 
   constructor(private _vehicleService: VehicleService) { }
 

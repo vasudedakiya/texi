@@ -8,11 +8,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { DownloadJourneyDetailsComponent } from '../download-journey-details/download-journey-details.component';
 import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-dashboard-trips',
   standalone: true,
-  imports: [DownloadJourneyDetailsComponent, CommonModule, GenerateInvoiceComponent, RouterModule],
+  imports: [DownloadJourneyDetailsComponent, CommonModule, GenerateInvoiceComponent, RouterModule, NgxPaginationModule],
   templateUrl: './dashboard-trips.component.html',
   styleUrl: './dashboard-trips.component.css',
   providers: [ConfirmationService, MessageService]
@@ -23,6 +24,7 @@ export class DashboardTripsComponent implements OnInit {
   visibleTrip = false;
   trips: any[] = [];
   isSidebarVisible: boolean = false;
+  p: number = 1;
 
   constructor(private _vehicleService: VehicleService,
   ) { }

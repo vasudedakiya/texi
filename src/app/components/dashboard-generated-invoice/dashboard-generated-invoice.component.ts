@@ -5,11 +5,12 @@ import { DownloadJourneyDetailsComponent } from '../download-journey-details/dow
 import { CommonModule } from '@angular/common';
 import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
 import { RouterModule } from '@angular/router';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-dashboard-generated-invoice',
   standalone: true,
-  imports: [DownloadJourneyDetailsComponent,CommonModule,GenerateInvoiceComponent,RouterModule],
+  imports: [DownloadJourneyDetailsComponent,CommonModule,GenerateInvoiceComponent,RouterModule,NgxPaginationModule],
   templateUrl: './dashboard-generated-invoice.component.html',
   styleUrl: './dashboard-generated-invoice.component.css'
 })
@@ -19,6 +20,7 @@ export class DashboardGeneratedInvoiceComponent implements OnInit {
   visibleTrip = false;
   trips: any[] = [];
   isSidebarVisible: boolean = false;
+  p: number = 1;
 
   constructor(private _vehicleService: VehicleService,
   ) { }

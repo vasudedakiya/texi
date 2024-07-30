@@ -85,47 +85,66 @@
                 <form (ngSubmit)="onSubmit(userForm)" #userForm="ngForm" novalidate>
                   <div class="mb-3">
                     <label for="userName" class="form-label">Full Name:</label>
-                    <input type="text" id="userName" name="userName" [(ngModel)]="userName" required class="form-control" #userNameField="ngModel">
-                    <div *ngIf="userNameField.invalid && (userNameField.dirty || userNameField.touched)" class="text-danger">
+                    <input type="text" id="userName" name="userName" [(ngModel)]="userName" required
+                      class="form-control" #userNameField="ngModel">
+                    <div *ngIf="userNameField.invalid && (userNameField.dirty || userNameField.touched)"
+                      class="text-danger">
                       <div *ngIf="userNameField.errors?.['required']">Full Name is required.</div>
                     </div>
                   </div>
-                
+
                   <div class="mb-3">
                     <label for="mobileNo" class="form-label">Mobile No:</label>
-                    <input type="tel" id="mobileNo" name="mobileNo" [(ngModel)]="mobileNo" required pattern="[0-9]{10}" class="form-control" #mobileNoField="ngModel">
-                    <div *ngIf="mobileNoField.invalid && (mobileNoField.dirty || mobileNoField.touched)" class="text-danger">
+                    <input type="tel" id="mobileNo" name="mobileNo" [(ngModel)]="mobileNo" required pattern="[0-9]{10}"
+                      class="form-control" #mobileNoField="ngModel">
+                    <div *ngIf="mobileNoField.invalid && (mobileNoField.dirty || mobileNoField.touched)"
+                      class="text-danger">
                       <div *ngIf="mobileNoField.errors?.['required']">Mobile No is required.</div>
                       <div *ngIf="mobileNoField.errors?.['pattern']">Mobile No must be 10 digits.</div>
                     </div>
                   </div>
-                
+
                   <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="email" id="email" name="email" [(ngModel)]="email" required class="form-control" #emailField="ngModel">
+                    <input type="email" id="email" name="email" [(ngModel)]="email" required class="form-control"
+                      #emailField="ngModel">
                     <div *ngIf="emailField.invalid && (emailField.dirty || emailField.touched)" class="text-danger">
                       <div *ngIf="emailField.errors?.['required']">Email is required.</div>
                       <div *ngIf="emailField.errors?.['email']">Please enter a valid email address.</div>
                     </div>
                   </div>
-                
+
                   <div class="mb-3">
                     <p class="small text-muted">Your booking will be effective from the scheduled date.</p>
                   </div>
                   <div class="mb-3">
                     <p class="small text-muted">Booking Date: July 14, 2024</p>
                   </div>
-                
+
                   <div class="d-flex justify-content-center align-items-center">
-                    <button type="submit" class="btn btn-outline-warning" [disabled]="userForm.invalid">Proceed to Booking</button>
+                    <button type="submit" class="btn btn-outline-warning" [disabled]="userForm.invalid">Proceed to
+                      Booking</button>
                   </div>
-                </form>                
+                </form>
               </div>
             </div>
             <div class="col-xl-4 col-12 bg-light p-4 d-flex align-items-center">
               <div class="card card-body w-100 h-auto">
-                <h2 class="h5 fw-bold mb-4 text-center">Total Payable <p class="text-xs">Include GST</p></h2>
-                {{basePrice | number: '1.0-2'}} + {{gst | number:'1.0-2'}}
+                <h2 class="h5 fw-bold mb-4 text-center">Total Payable <p class="text-xs">Include GST</p>
+                </h2>
+                <table class="table table-borderless">
+                  <tbody class="d-flex flex-column align-items-center">
+                    <tr class="d-flex">
+                      <td class="d-flex justify-content-end" style="width: 105px;">Base Price</td>
+                      <td class="d-flex justify-content-start" style="width: 105px;">{{basePrice | number: '1.0-2'}}
+                      </td>
+                    </tr>
+                    <tr class="d-flex">
+                      <td class="d-flex justify-content-end pt-0" style="width: 105px;">GST</td>
+                      <td class="d-flex justify-content-start pt-0" style="width: 105px;">{{gst | number:'1.0-2'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
                 <p class="display-6 fw-bold mb-4 text-center">
                   <span class="price-text">
                     <ng-container *ngIf="priceText !== null; else calculating">
@@ -159,63 +178,69 @@
 
 
 <div class="d-none">
-  <div #invoice style="width: 800px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
-      <!-- Invoice Header -->
-      <div class="invoice-header" style="text-align: center; margin-bottom: 20px;">
-        <img src='data:image/png;base64,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' alt="Logo" style="max-width: 150px; height: auto; margin-bottom: 15px;">
-        <h1 style="font-size: 2.5rem; margin: 0; color: #333;">Invoice</h1>
-      </div>
-    
-      <!-- Invoice Details -->
-      <div class="invoice-details" style="background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-          <div style="flex: 1; min-width: 300px;">
-            <div class="detail" style="margin-bottom: 15px;">
-              <strong style="color: #555;">Name:</strong>
-              <p style="margin: 0; color: #333;">{{userDetails.Name}}</p>
-            </div>
-            <div class="detail" style="margin-bottom: 15px;">
-              <strong style="color: #555;">Email:</strong>
-              <p style="margin: 0; color: #333;">{{userDetails.Email}}</p>
-            </div>
-            <div class="detail" style="margin-bottom: 15px;">
-              <strong style="color: #555;">Phone Number:</strong>
-              <p style="margin: 0; color: #333;">{{userDetails.MoNumber}}</p>
-            </div>
+  <div #invoice
+    style="width: 800px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9;">
+    <!-- Invoice Header -->
+    <div class="invoice-header" style="text-align: center; margin-bottom: 20px;">
+      <img
+        src='data:image/png;base64,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'
+        alt="Logo" style="max-width: 150px; height: auto; margin-bottom: 15px;">
+      <h1 style="font-size: 2.5rem; margin: 0; color: #333;">Invoice</h1>
+    </div>
+
+    <!-- Invoice Details -->
+    <div class="invoice-details"
+      style="background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+      <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        <div style="flex: 1; min-width: 300px;">
+          <div class="detail" style="margin-bottom: 15px;">
+            <strong style="color: #555;">Name:</strong>
+            <p style="margin: 0; color: #333;">{{userDetails.Name}}</p>
           </div>
-          <div style="flex: 1; min-width: 300px;">
-            <div class="detail" style="margin-bottom: 15px;">
-              <strong style="color: #555;">From:</strong>
-              <p style="margin: 0; color: #333;">{{userDetails.From}}</p>
-            </div>
-            <div class="detail" style="margin-bottom: 15px;">
-              <strong style="color: #555;">To:</strong>
-              <p style="margin: 0; color: #333;">{{userDetails.To}}</p>
-            </div>
-            <div class="detail" style="margin-bottom: 15px;">
-              <strong style="color: #555;">Vehicle:</strong>
-              <p style="margin: 0; color: #333;">{{userDetails.Vehicle}}</p>
-            </div>
-            <div class="detail" style="margin-bottom: 15px;">
-              <strong style="color: #555;">Date:</strong>
-              <p style="margin: 0; color: #333;">{{userDetails.Date | date: 'short'}}</p>
-            </div>
-            <div class="detail" style="margin-bottom: 15px;">
-              <strong style="color: #555;">Amount:</strong>
-              <p style="margin: 0; color: #333; font-family: Arial, sans-serif;">{{userDetails.Rate | number: '1.0-0'}}</p>
-            </div>
+          <div class="detail" style="margin-bottom: 15px;">
+            <strong style="color: #555;">Email:</strong>
+            <p style="margin: 0; color: #333;">{{userDetails.Email}}</p>
+          </div>
+          <div class="detail" style="margin-bottom: 15px;">
+            <strong style="color: #555;">Phone Number:</strong>
+            <p style="margin: 0; color: #333;">{{userDetails.MoNumber}}</p>
+          </div>
+        </div>
+        <div style="flex: 1; min-width: 300px;">
+          <div class="detail" style="margin-bottom: 15px;">
+            <strong style="color: #555;">From:</strong>
+            <p style="margin: 0; color: #333;">{{userDetails.From}}</p>
+          </div>
+          <div class="detail" style="margin-bottom: 15px;">
+            <strong style="color: #555;">To:</strong>
+            <p style="margin: 0; color: #333;">{{userDetails.To}}</p>
+          </div>
+          <div class="detail" style="margin-bottom: 15px;">
+            <strong style="color: #555;">Vehicle:</strong>
+            <p style="margin: 0; color: #333;">{{userDetails.Vehicle}}</p>
+          </div>
+          <div class="detail" style="margin-bottom: 15px;">
+            <strong style="color: #555;">Date:</strong>
+            <p style="margin: 0; color: #333;">{{userDetails.Date | date: 'short'}}</p>
+          </div>
+          <div class="detail" style="margin-bottom: 15px;">
+            <strong style="color: #555;">Amount:</strong>
+            <p style="margin: 0; color: #333; font-family: Arial, sans-serif;">{{userDetails.Rate | number: '1.0-0'}}
+            </p>
           </div>
         </div>
       </div>
-      <!-- Invoice Footer -->
-      <div class="invoice-footer" style="text-align: center; margin-top: 20px;">
-        <p style="margin: 0; color: #777; font-size: 14px;">Thank you for booking with us!</p>
-      </div>
     </div>
+    <!-- Invoice Footer -->
+    <div class="invoice-footer" style="text-align: center; margin-top: 20px;">
+      <p style="margin: 0; color: #777; font-size: 14px;">Thank you for booking with us!</p>
+    </div>
+  </div>
 </div>
 
 <!-- Hidden Button to Trigger Modal -->
-<button #openModalBtn type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#pdfModal">Open Modal</button>
+<button #openModalBtn type="button" class="btn btn-primary d-none" data-bs-toggle="modal"
+  data-bs-target="#pdfModal">Open Modal</button>
 
 <!-- Modal Template -->
 <div #pdfModal class="modal fade" id="pdfModal" tabindex="-1" aria-hidden="true">
@@ -223,7 +248,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Invoice</h5>
-        <button #closedownloadModalBtn type="button" id="closeModalBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button #closedownloadModalBtn type="button" id="closeModalBtn" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <iframe #pdfFrame width="100%" height="500px"></iframe>
