@@ -42,12 +42,27 @@
             [minDate]="today" placeholder="Select Date" dateFormat="dd/mm/yy" />
         </div>
       </div>
+
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 pb-4">
         <div class="input-group input-group-lg">
           <i class="fa fa-clock-o form-input-icon"></i>
           <p-calendar class="w-100" styleClass="w-100" [(ngModel)]="selectedTime" [showIcon]="true" [timeOnly]="true"
             [hourFormat]="'12'" [touchUI]="true" placeholder="Select a Time">
           </p-calendar>
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 pb-4">
+        <div class="input-group input-group-lg">
+          <i class="fa-solid fs-6 fa-user-group form-input-icon"></i>
+          <input pInputText placeholder="Passengers" class="w-100" [(ngModel)]="passengersCount" styleClass="w-100" type="number">
+        </div>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 pb-4">
+        <div class="input-group input-group-lg">
+          <i class="fa-solid fa-suitcase-rolling form-input-icon"></i>
+          <input pInputText placeholder="Luggage" class="w-100" [(ngModel)]="luggageCount" styleClass="w-100" type="number">
         </div>
       </div>
 

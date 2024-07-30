@@ -15,6 +15,8 @@ export class SharedDataService {
   PhoneNo: string = "";
   vehicle: Vehicles | undefined;
   DateTime: Date = new Date();
+  luggageCount: number | undefined;
+  passengersCount: number | undefined;
 
   savePhoneNo() {
     sessionStorage.setItem('PhoneNo', this.PhoneNo)

@@ -42,6 +42,8 @@ export class DashboardComponent implements OnInit {
   toLatLng: { lat: number, lon: number } | undefined;
   today: Date = new Date();
   selectedTime: Date | undefined; 
+  passengersCount:number | undefined;
+  luggageCount:number | undefined;
 
   vehicleService = inject(VehicleService);
   private readonly _storage = inject(Storage);
@@ -119,6 +121,8 @@ export class DashboardComponent implements OnInit {
     );
 
     this._sharedDataService.DateTime = combinedDateTime;
+    this._sharedDataService.passengersCount = this.passengersCount;
+    this._sharedDataService.luggageCount = this.luggageCount;
     this._sharedDataService.saveData();
   }
   
