@@ -36,9 +36,9 @@ export class DownloadJourneyDetailsComponent {
         doc.save(`${this.billNo}_Invoice.pdf`);
       },
       x: 60,
-      y: 1,
+      y: 3,
       html2canvas: {
-        scale: .9, // Increase the scale
+        scale: .8, // Increase the scale
       },
     });
   }

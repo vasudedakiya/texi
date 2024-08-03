@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { CarouselComponent } from '../carousel/carousel.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationIqService } from '../../service/location-iq.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { switchMap, timer } from 'rxjs';
 import { SharedDataService } from '../../service/shared-data.service';
 import { UserDetails } from '../../vehicle.interface';
@@ -38,7 +38,7 @@ export class BookingDetailsComponent implements OnInit,AfterViewInit  {
 
   constructor(private route: ActivatedRoute,
     private _locationIqService: LocationIqService,
-    private _sharedDataService: SharedDataService,
+    readonly _sharedDataService: SharedDataService,
     private _router: Router,
     private _vehicleService: VehicleService,
     private messageService: MessageService
@@ -175,13 +175,9 @@ export class BookingDetailsComponent implements OnInit,AfterViewInit  {
               };
 
 
-              // $('#bookingModal').hide();
               this.closeBookingModal.nativeElement.click();
 
-              // this._router.navigate(['/dashboard']).then(() => {
-              // Trigger download after navigation
               this.onDownload();
-              // });
 
 
 
@@ -280,9 +276,9 @@ export class BookingDetailsComponent implements OnInit,AfterViewInit  {
         this.openModalBtn.nativeElement.click();
       },
       x: 60,
-      y: 1,
+      y: 3,
       html2canvas: {
-        scale: 0.9,
+        scale: 0.8,
       },
     });
   }
