@@ -2,28 +2,26 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { CarouselComponent } from '../carousel/carousel.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationIqService } from '../../service/location-iq.service';
-import { CommonModule, formatDate } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { switchMap, timer } from 'rxjs';
 import { SharedDataService } from '../../service/shared-data.service';
-import { UserDetails } from '../../vehicle.interface';
 import { VehicleService } from '../../service/vehicle.service';
 import { MessageService } from 'primeng/api';
 import { FormsModule, NgForm } from '@angular/forms';
-import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
+import emailjs from '@emailjs/browser';
 import { emailJsPK, emailJsServiceId, emailJsTemplateId } from '../../firebase.config';
 import jsPDF from 'jspdf';
-import $ from 'jquery';
-import { Timestamp } from '@angular/fire/firestore';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-booking-details',
   standalone: true,
-  imports: [CarouselComponent, CommonModule, FormsModule],
+  imports: [CarouselComponent, CommonModule, FormsModule, ToastModule],
   templateUrl: './booking-details.component.html',
   styleUrl: './booking-details.component.css',
   providers: [MessageService]
 })
-export class BookingDetailsComponent implements OnInit,AfterViewInit  {
+export class BookingDetailsComponent implements OnInit, AfterViewInit {
   @ViewChild('bookingModalOpenButton', { static: false }) bookingModalOpenButton!: ElementRef;
   @ViewChild('bookingModal', { static: false }) bookingModal!: ElementRef;
   @ViewChild('closeBookingModal', { static: false }) closeBookingModal!: ElementRef;
@@ -66,7 +64,7 @@ export class BookingDetailsComponent implements OnInit,AfterViewInit  {
         this._router.navigate(['/dashboard']);
       });
     }
-  } 
+  }
   userDetails: any = {
     Name: '',
     Email: '',
@@ -159,7 +157,7 @@ export class BookingDetailsComponent implements OnInit,AfterViewInit  {
           this._vehicleService.addUserDetails(this.userDetails).subscribe({
             next: (data) => {
               this.isCreateLoading = false;
-              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
+              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Booking confirmed' });
               this.visible = false;
 
               const templateParams = {
@@ -178,8 +176,6 @@ export class BookingDetailsComponent implements OnInit,AfterViewInit  {
               this.closeBookingModal.nativeElement.click();
 
               this.onDownload();
-
-
 
               emailjs.send(emailJsServiceId, emailJsTemplateId, templateParams, { publicKey: emailJsPK })
                 .then();
@@ -291,8 +287,8 @@ export class BookingDetailsComponent implements OnInit,AfterViewInit  {
       link.download = `${this.userDetails.BillNo}_Invoice.pdf`;
       link.click();
 
-     this._router.navigate(['/dashboard']).then(() => {
-              location.reload();
+      this._router.navigate(['/dashboard']).then(() => {
+        location.reload();
       });
     }
   }
